@@ -1,9 +1,32 @@
 module.exports = class Entity {
     constructor(m, texture="noimg", x=0, y=0) {
         this._manifest = m;
-        this._sprite = new PIXI.Sprite(
-            PIXI.loader.resources[texture].texture
-        );
+        this._sprite_type;
+        let res = PIXI.loader.resources;
+        switch(res[texture].extension){
+            case 'json':
+            this._sprite_type = 'spine';
+            this._sprite = new PIXI.spine.Spine(
+                res[texture].spineData
+            );
+            this._sprite.skeleton.setToSetupPose();
+            this._sprite.update(0);
+            this._sprite.autoUpdate = false;
+            this._sprite.state.setAnimation(0, 'idle', true);
+            break;
+            case 'png':
+            this._sprite_type = 'image';
+            this._sprite = new PIXI.Sprite(
+                res[texture].texture
+            );
+            break;
+            default:
+            console.error('.'+res[texture].extension+' not an acceptable extention for Entity sprite');
+            this._sprite_type = 'image';
+            this._sprite = new PIXI.Sprite(
+                res["noimg"].texture
+            );
+        }
         this._sprite.x = x;
         this._sprite.y = y;
         this._subscribed_actions = {
@@ -39,6 +62,9 @@ module.exports = class Entity {
 
     tick(){
         this.slide(this._velocity.x,this._velocity.y);
+        if(this._sprite_type==='spine'){
+            this._sprite.update(0.016);
+        }
     }
 
     //coordinate methods

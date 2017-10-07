@@ -2,7 +2,7 @@ class Manifest {
     constructor(e) {
         this._engine = e;
         this._player = require('./player')(this, 'blob', 30, 30).create();
-        this._player2 = require('./player')(this, 'blobdevil', 230, 230, true).create();
+        this._player2 = require('./player')(this, 'alien', 500, 700, true).create();
         this._enemeies = [];
     }
 

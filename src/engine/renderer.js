@@ -1,5 +1,5 @@
 class Renderer {
-    constructor(e, w=800, h=450, o={}) {
+    constructor(e, w=1000, h=700, o={}) {
         this._engine = e;
         this._renderer = PIXI.autoDetectRenderer(w, h, o);
         this._stage = new PIXI.Container();

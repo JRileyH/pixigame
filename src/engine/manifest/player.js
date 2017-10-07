@@ -4,31 +4,39 @@ class Player extends require('./entity'){
 
         //up
         this.setAction(p2?38:87,"press",()=>{
-            this._velocity.y-=1;
+            if(!this._sprite_type==='spine'){this._velocity.y-=1;}
         });
         this.setAction(p2?38:87,"release",()=>{
-            this._velocity.y+=1;
+            if(!this._sprite_type==='spine'){this._velocity.y+=1;}
         });
         //down
         this.setAction(p2?40:83,"press",()=>{
-            this._velocity.y+=1;
+            if(!this._sprite_type==='spine'){this._velocity.y+=1;}
         });
         this.setAction(p2?40:83,"release",()=>{
-            this._velocity.y-=1;
+            if(!this._sprite_type==='spine'){this._velocity.y-=1;}
         });
         //left
         this.setAction(p2?37:65,"press",()=>{
-            this._velocity.x-=1;
+            if(!this._sprite_type==='spine'){this._velocity.x-=1;}
         });
         this.setAction(p2?37:65,"release",()=>{
-            this._velocity.x+=1;
+            if(!this._sprite_type==='spine'){this._velocity.x+=1;}
         });
         //right
         this.setAction(p2?39:68,"press",()=>{
-            this._velocity.x+=1;
+            if(this._sprite_type==='spine'){
+                this._sprite.state.setAnimation(0, 'walk', true);
+            } else {
+                this._velocity.x+=1;
+            }
         });
         this.setAction(p2?39:68,"release",()=>{
-            this._velocity.x-=1;
+            if(this._sprite_type==='spine'){
+                this._sprite.state.setAnimation(0, 'idle', true);
+            } else {
+                this._velocity.x-=1;
+            }
         });
     }
 

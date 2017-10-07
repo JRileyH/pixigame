@@ -1,0 +1,132 @@
+
+alien.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+abdomen
+  rotate: true
+  xy: 240, 189
+  size: 64, 147
+  orig: 64, 147
+  offset: 0, 0
+  index: -1
+cod
+  rotate: true
+  xy: 912, 149
+  size: 32, 54
+  orig: 32, 54
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 2, 81
+  size: 121, 172
+  orig: 121, 172
+  offset: 0, 0
+  index: -1
+l_bicep
+  rotate: true
+  xy: 712, 169
+  size: 84, 102
+  orig: 84, 102
+  offset: 0, 0
+  index: -1
+l_foot
+  rotate: false
+  xy: 188, 25
+  size: 64, 41
+  orig: 64, 41
+  offset: 0, 0
+  index: -1
+r_foot
+  rotate: false
+  xy: 188, 25
+  size: 64, 41
+  orig: 64, 41
+  offset: 0, 0
+  index: -1
+l_forearm
+  rotate: false
+  xy: 125, 139
+  size: 113, 114
+  orig: 113, 114
+  offset: 0, 0
+  index: -1
+l_hand
+  rotate: false
+  xy: 912, 183
+  size: 57, 70
+  orig: 57, 70
+  offset: 0, 0
+  index: -1
+l_shin
+  rotate: true
+  xy: 389, 197
+  size: 27, 169
+  orig: 27, 169
+  offset: 0, 0
+  index: -1
+l_thigh
+  rotate: true
+  xy: 240, 141
+  size: 46, 150
+  orig: 46, 150
+  offset: 0, 0
+  index: -1
+neck
+  rotate: false
+  xy: 971, 177
+  size: 51, 76
+  orig: 51, 76
+  offset: 0, 0
+  index: -1
+pelvis
+  rotate: true
+  xy: 816, 162
+  size: 91, 94
+  orig: 91, 94
+  offset: 0, 0
+  index: -1
+r_bicep
+  rotate: true
+  xy: 125, 68
+  size: 69, 104
+  orig: 69, 104
+  offset: 0, 0
+  index: -1
+r_forearm
+  rotate: true
+  xy: 562, 207
+  size: 46, 148
+  orig: 46, 148
+  offset: 0, 0
+  index: -1
+r_hand
+  rotate: true
+  xy: 106, 25
+  size: 41, 80
+  orig: 41, 80
+  offset: 0, 0
+  index: -1
+r_shin
+  rotate: true
+  xy: 389, 226
+  size: 27, 171
+  orig: 27, 171
+  offset: 0, 0
+  index: -1
+r_thigh
+  rotate: true
+  xy: 392, 149
+  size: 46, 150
+  orig: 46, 150
+  offset: 0, 0
+  index: -1
+torso
+  rotate: false
+  xy: 2, 2
+  size: 102, 77
+  orig: 102, 77
+  offset: 0, 0
+  index: -1
