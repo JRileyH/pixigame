@@ -1,0 +1,181 @@
+
+knight.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+abdomen
+  rotate: true
+  xy: 931, 195
+  size: 59, 88
+  orig: 59, 88
+  offset: 0, 0
+  index: -1
+f_bicep
+  rotate: false
+  xy: 124, 38
+  size: 81, 84
+  orig: 81, 84
+  offset: 0, 0
+  index: -1
+f_elbow
+  rotate: true
+  xy: 521, 106
+  size: 62, 61
+  orig: 62, 61
+  offset: 0, 0
+  index: -1
+f_foot
+  rotate: true
+  xy: 221, 106
+  size: 43, 77
+  orig: 43, 77
+  offset: 0, 0
+  index: -1
+f_forearm
+  rotate: false
+  xy: 584, 200
+  size: 117, 54
+  orig: 117, 54
+  offset: 0, 0
+  index: -1
+f_hand
+  rotate: false
+  xy: 584, 72
+  size: 65, 57
+  orig: 65, 57
+  offset: 0, 0
+  index: -1
+f_knee
+  rotate: true
+  xy: 666, 127
+  size: 71, 65
+  orig: 71, 65
+  offset: 0, 0
+  index: -1
+f_shin
+  rotate: false
+  xy: 221, 151
+  size: 115, 103
+  orig: 115, 103
+  offset: 0, 0
+  index: -1
+f_shoulder
+  rotate: true
+  xy: 207, 37
+  size: 67, 72
+  orig: 67, 72
+  offset: 0, 0
+  index: -1
+f_thigh
+  rotate: true
+  xy: 2, 2
+  size: 111, 120
+  orig: 111, 120
+  offset: 0, 0
+  index: -1
+f_toe
+  rotate: false
+  xy: 281, 41
+  size: 35, 63
+  orig: 35, 63
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 2, 115
+  size: 111, 139
+  orig: 111, 139
+  offset: 0, 0
+  index: -1
+neck
+  rotate: false
+  xy: 124, 6
+  size: 76, 30
+  orig: 76, 30
+  offset: 0, 0
+  index: -1
+pelvis
+  rotate: false
+  xy: 584, 131
+  size: 80, 67
+  orig: 80, 67
+  offset: 0, 0
+  index: -1
+r_bicep
+  rotate: false
+  xy: 826, 204
+  size: 103, 50
+  orig: 103, 50
+  offset: 0, 0
+  index: -1
+r_elbow
+  rotate: true
+  xy: 806, 137
+  size: 65, 70
+  orig: 65, 70
+  offset: 0, 0
+  index: -1
+r_foot
+  rotate: true
+  xy: 927, 136
+  size: 57, 69
+  orig: 57, 69
+  offset: 0, 0
+  index: -1
+r_forearm
+  rotate: true
+  xy: 703, 213
+  size: 41, 121
+  orig: 41, 121
+  offset: 0, 0
+  index: -1
+r_hand
+  rotate: false
+  xy: 651, 65
+  size: 61, 60
+  orig: 61, 60
+  offset: 0, 0
+  index: -1
+r_knee
+  rotate: false
+  xy: 733, 145
+  size: 71, 66
+  orig: 71, 66
+  offset: 0, 0
+  index: -1
+r_shin
+  rotate: false
+  xy: 338, 150
+  size: 113, 104
+  orig: 113, 104
+  offset: 0, 0
+  index: -1
+r_shoulder
+  rotate: true
+  xy: 453, 103
+  size: 65, 66
+  orig: 65, 66
+  offset: 0, 0
+  index: -1
+r_thigh
+  rotate: false
+  xy: 453, 170
+  size: 129, 84
+  orig: 129, 84
+  offset: 0, 0
+  index: -1
+r_toe
+  rotate: false
+  xy: 878, 147
+  size: 47, 55
+  orig: 47, 55
+  offset: 0, 0
+  index: -1
+torso
+  rotate: false
+  xy: 115, 124
+  size: 104, 130
+  orig: 104, 130
+  offset: 0, 0
+  index: -1

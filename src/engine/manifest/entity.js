@@ -2,7 +2,11 @@ module.exports = class Entity {
     constructor(m, texture="noimg", x=0, y=0) {
         this._manifest = m;
         this._sprite_type;
+        this._animation_state = 'idle';
         let res = PIXI.loader.resources;
+        if(res[texture]===undefined){
+            throw { type: 'MissingResourceException', message: '['+texture+'] resource has not been loaded.'}
+        }
         switch(res[texture].extension){
             case 'json':
             this._sprite_type = 'spine';
@@ -63,7 +67,7 @@ module.exports = class Entity {
     tick(){
         this.slide(this._velocity.x,this._velocity.y);
         if(this._sprite_type==='spine'){
-            this._sprite.update(0.016);
+            this._sprite.update(0.026);
         }
     }
 
