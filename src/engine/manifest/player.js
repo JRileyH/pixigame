@@ -4,14 +4,17 @@ class Player extends require('./entity'){
 
         this.setAction(32,"press",()=>{
             if(this._sprite_type==='spine'){
-                this.setState('run');
+                this.setState('start_run');
+                this.delay(this._frames_in_cycle, ()=>{
+                    this.setState('run');
+                })
             }
         })
         
         this.setAction(32,"release",()=>{
             if(this._sprite_type==='spine'){
                 this.setState('stop_run');
-                this.delay(37, ()=>{
+                this.delay(this._frames_in_cycle, ()=>{
                     this.setState('idle');
                 })
                 

@@ -3,6 +3,16 @@ module.exports = class Entity {
         this._manifest = m;
         this._sprite_type;
         this._animation_state = 'idle';
+        //frames in cycle is equal 30 Spine frames at animation speed
+        //exact convertion to come.
+        //---Speed---|---Cycle---\\
+        //   0.01    |    98     \\
+        //   0.02    |    48     \\
+        //   0.03    |    32     \\
+        //   0.04    |    23     \\
+        this._animation_speed = 0.04;
+        this._frames_in_cycle = 23;
+
         let res = PIXI.loader.resources;
         if(res[texture]===undefined){
             throw { type: 'MissingResourceException', message: '['+texture+'] resource has not been loaded.'}
@@ -89,7 +99,7 @@ module.exports = class Entity {
             }
         }
         if(this._sprite_type==='spine'){
-            this._sprite.update(0.026);
+            this._sprite.update(this._animation_speed);
         }
     }
 
