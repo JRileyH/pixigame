@@ -34,6 +34,12 @@ module.exports = class Entity {
                 res[texture].texture
             );
             break;
+            case 'jpg':
+            this._sprite_type = 'image';
+            this._sprite = new PIXI.Sprite(
+                res[texture].texture
+            );
+            break;
             default:
             console.error('.'+res[texture].extension+' not an acceptable extention for Entity sprite');
             this._sprite_type = 'image';

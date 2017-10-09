@@ -1,7 +1,7 @@
 class Renderer {
-    constructor(e, o={}) {
+    constructor(e) {
         this._engine = e;
-        this._renderer = PIXI.autoDetectRenderer(Game.Window.Width, Game.Window.Height, o);
+        this._renderer = PIXI.autoDetectRenderer(Game.Window.width, Game.Window.height, Game.Window.options);
         this._stage = new PIXI.Container();
     }
 

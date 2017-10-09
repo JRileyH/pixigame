@@ -2,8 +2,11 @@ module.exports = {
     Window: {
         id: "GameWindow",
         loader: "LoadWindow",
-        Width: 1000,
-        Height: 700
+        width: 1000,
+        height: 700,
+        options:{
+            backgroundColor: 0x308362
+        }
     },
 
 }
