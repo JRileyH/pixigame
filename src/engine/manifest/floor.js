@@ -11,13 +11,13 @@ class Floor extends require('./entity'){
 
         this.setAction(32,"press",()=>{
             this.delay(this._frames_in_cycle/2, ()=>{
-                this._velocity.x += 20;
+                this._velocity.x = 20;
             });            
         })
         
         this.setAction(32,"release",()=>{
             this.delay(this._frames_in_cycle/2, ()=>{
-                this._velocity.x += -20;
+                this._velocity.x = 0;
             });     
         });
     }
