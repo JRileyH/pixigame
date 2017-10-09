@@ -38,7 +38,12 @@ module.exports = class Entity {
             release:[],
             during:[]
         }
-
+        this._delay = {
+            active: false,
+            count: 0,
+            until: 0,
+            after: ()=>{},
+        }
 
         this._velocity = {x:0, y:0};
     }
@@ -64,8 +69,25 @@ module.exports = class Entity {
         this._subscribed_actions[action][key] = undefined;
     }
 
+    delay(frames, cb){
+        this._delay.active = true;
+        this._delay.count = 0;
+        this._delay.until = frames;
+        this._delay.after = cb;
+    }
+
+    setState(state){
+        this._sprite.state.setAnimation(0, state, true);
+        this._animation_state=state;
+    }
+    
     tick(){
-        this.slide(this._velocity.x,this._velocity.y);
+        if(this._delay.active){
+            if(this._delay.until<this._delay.count++){
+                this._delay.after();
+                this._delay.active = false;
+            }
+        }
         if(this._sprite_type==='spine'){
             this._sprite.update(0.026);
         }

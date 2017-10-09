@@ -1,7 +1,7 @@
 class Manifest {
     constructor(e) {
         this._engine = e;
-        this._player = require('./player')(this, 'knight', 500, 650, 'run').create();
+        this._player = require('./player')(this, 'knight', 500, 650).create();
         this._enemeies = [];
     }
 

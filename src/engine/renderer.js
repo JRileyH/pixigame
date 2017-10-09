@@ -1,12 +1,12 @@
 class Renderer {
-    constructor(e, w=1000, h=700, o={}) {
+    constructor(e, o={}) {
         this._engine = e;
-        this._renderer = PIXI.autoDetectRenderer(w, h, o);
+        this._renderer = PIXI.autoDetectRenderer(Game.Window.Width, Game.Window.Height, o);
         this._stage = new PIXI.Container();
     }
 
     start(){
-        document.body.appendChild(this._renderer.view);
+        document.getElementById(Game.Window.id).appendChild(this._renderer.view);
         this.tick();
     }
     tick(){
