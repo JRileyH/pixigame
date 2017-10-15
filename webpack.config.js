@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = {
     entry: './src/app.js',
     output: {
@@ -17,6 +19,9 @@ module.exports = {
                }
            }
        ]
+   },
+   resolve:{
+       
    },
    devtool: "source-map"
 };

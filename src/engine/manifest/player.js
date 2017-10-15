@@ -23,10 +23,6 @@ class Player extends require('./entity'){
             })
         });
     }
-
-    tick(){
-        super.tick();
-    }
 }
 
 module.exports = (...args)=>{

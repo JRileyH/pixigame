@@ -7,6 +7,7 @@ module.exports = (cb, handleProgress)=>{
         .add('blob', 'res/textures/blob.png')
         .add('blobdevil', 'res/textures/blobdevil.png')
         .add('floor', 'res/textures/floor.jpg')
+        .add('dialogue_box', 'res/textures/DialogBox.png')
         .add('noimg', 'res/textures/noimg.png')
         .on("progress", handleProgress)
         .load(cb);

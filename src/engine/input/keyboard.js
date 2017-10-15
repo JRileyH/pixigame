@@ -8,6 +8,7 @@ class Keyboard {
         this._keys = [];
 
         window.addEventListener("keydown", event=>{
+            //console.log(event.keyCode);
             if(!this._keys[event.keyCode]){
                 this._keys[event.keyCode]=true;
                 this._process_event(event.keyCode, 'press');
