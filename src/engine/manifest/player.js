@@ -1,24 +1,26 @@
 class Player extends require('./entity'){
     constructor(m, texture, x, y) {
-        super(m, texture, x, y );
+        super(m, texture, undefined, {x,y}, undefined );
 
         this.setAction(32,"press",()=>{
-            if(this._sprite_type==='spine'){
-                this.setState('start_run');
-                this.delay(this._frames_in_cycle, ()=>{
-                    this.setState('run');
-                })
-            }
-        })
+            this.setState('start_run');
+            this.delay(this._frames_in_cycle, ()=>{
+                this.setState('run');
+            })
+        });
         
         this.setAction(32,"release",()=>{
-            if(this._sprite_type==='spine'){
-                this.setState('stop_run');
-                this.delay(this._frames_in_cycle, ()=>{
-                    this.setState('idle');
-                })
-                
-            }
+            this.setState('stop_run');
+            this.delay(this._frames_in_cycle, ()=>{
+                this.setState('idle');
+            })
+        });
+
+        this.setAction(87,"press",()=>{
+            this.setState('idle_throw');
+            this.delay(this._frames_in_cycle*2, ()=>{
+                this.setState('idle');
+            })
         });
     }
 
