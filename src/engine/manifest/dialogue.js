@@ -47,22 +47,27 @@ class Dialogue extends require('./spine'){
         this._sprite.x = 800;
         this._sprite.y = 500;
 
-        this.setAction(13,"press",()=>{
+        this.setKeyAction(13,"press",()=>{
             if(this._convo.options[0]!==null){
                 this.next(0);
             }
         });
+        
+        this.setMouseAction(0, "press", e=>{
+            console.log(e);
+        });
+
         this.setResponseListeners();
     }
 
     setResponseListeners(){
         for(let i = 1; i <=9; i++){
             if(this._convo.options[i]!==undefined){
-                this.setAction(48+i,"press",()=>{
+                this.setKeyAction(48+i,"press",()=>{
                     this.next(i);
                 });
             } else {
-                this.removeAction(48+i, "press");
+                this.removeKeyAction(48+i, "press");
             }
         }
     }
@@ -76,9 +81,18 @@ class Dialogue extends require('./spine'){
         }
         if(this._dialog_box.height<this._dialog_box_text.height){
             this._scrollable = true;
-            
+            this.setMouseAction(3, "scroll", e=>{//up
+                this._dialog_box_text.y+=5;
+                if(this._dialog_box_text.y<this._dialog_box.y)this._dialog_box_text.y=0;
+            });
+            this.setMouseAction(4, "scroll", e=>{//down
+                this._dialog_box_text.y-=5;
+            });
+
         } else {
             this._scrollable = false;
+            this.removeMouseAction(3, "scroll");
+            this.removeMouseAction(4, "scroll");
         }
 
         this.setResponseListeners();

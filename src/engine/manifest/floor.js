@@ -9,13 +9,13 @@ class Floor extends require('./entity'){
         this._sprite2.y = y;
         this._manifest.add(this._sprite2);
 
-        this.setAction(32,"press",()=>{
+        this.setKeyAction(32,"press",()=>{
             this.delay(this._frames_in_cycle/2, ()=>{
                 this._velocity.x = 20;
             });            
         })
         
-        this.setAction(32,"release",()=>{
+        this.setKeyAction(32,"release",()=>{
             this.delay(this._frames_in_cycle/2, ()=>{
                 this._velocity.x = 0;
             });     

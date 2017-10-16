@@ -28,10 +28,16 @@ module.exports = class Spine {
         this._sprite.x = 0;
         this._sprite.y = 0;
 
-        this._subscribed_actions = {
+        this._subscribed_key_actions = {
             press:[],
             release:[],
             during:[]
+        }
+        this._subscribed_mouse_actions = {
+            press:[],
+            release:[],
+            during:[],
+            scroll:[]
         }
         this._delay = {
             active: false,
@@ -50,16 +56,28 @@ module.exports = class Spine {
         Engine.Manifest.remove(this._sprite);
     }
 
-    setAction(key, action, event){
-        if(this._subscribed_actions[action][key]===undefined){
+    setKeyAction(key, action, event){
+        if(this._subscribed_key_actions[action][key]===undefined){
             let subscription_id = this._manifest._engine.Input.Keyboard.subscribe(key, action, event);
-            this._subscribed_actions[action][key] = subscription_id;
+            this._subscribed_key_actions[action][key] = subscription_id;
         }
     }
-    removeAction(key, action){
-        let id = this._subscribed_actions[action][key];
+    removeKeyAction(key, action){
+        let id = this._subscribed_key_actions[action][key];
         this._manifest._engine.Input.Keyboard.unsubscribe(key, action, id);
-        this._subscribed_actions[action][key] = undefined;
+        this._subscribed_key_actions[action][key] = undefined;
+    }
+
+    setMouseAction(button, action, event){
+        if(this._subscribed_mouse_actions[action][button]===undefined){
+            let subscription_id = this._manifest._engine.Input.Mouse.subscribe(button, action, event);
+            this._subscribed_mouse_actions[action][button] = subscription_id;
+        }
+    }
+    removeMouseAction(button, action){
+        let id = this._subscribed_mouse_actions[action][button];
+        this._manifest._engine.Input.Mouse.unsubscribe(button, action, id);
+        this._subscribed_mouse_actions[action][button] = undefined;
     }
 
     delay(frames, cb){
