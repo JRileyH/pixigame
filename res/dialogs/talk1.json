@@ -2,15 +2,18 @@
     {
         "preaction": null,
         "text": "Hi! I am an NPC and you can talk to me.. Now that you have the basics lets try some dynamic speech.",
-        "emotion": "happy",
+        "emotion": "idle",
         "options": [
             {"index":1}
         ]
     },
     {
-        "preaction": null,
-        "text": "Do you want to eat? Food is very important. So important in fact that I am willing to just drone on and on about it filling most of this dialogue box with one giant run on sentence that never seems to end because whos knows what will happen if the sentence gets so long it can no longer fit in the dialogue box!",
-        "emotion": "inquisitive",
+        "preaction": {
+            "emote":"idle_throw",
+            "length":2
+        },
+        "text": "Do you want to eat? Food is very important. So important in fact that I am willing to just drone on and on about it filling most of this dialog box with one giant run on sentence that never seems to end because whos knows what will happen if the sentence gets so long it can no longer fit in the dialog box!",
+        "emotion": "idle",
         "options": [
             null,
             {"response":"I want to.", "index":2},
@@ -21,7 +24,7 @@
     {
         "preaction": null,
         "text": "Well too bad! You think this is a charity? I don't have any food for you!",
-        "emotion": "angry",
+        "emotion": "idle",
         "options": [
             {"index":0}
         ]
@@ -29,7 +32,7 @@
     {
         "preaction": null,
         "text": "Well good. I didn't have any food for you anyways.",
-        "emotion": "smug",
+        "emotion": "idle",
         "options": [
             {"index":0}
         ]
@@ -37,7 +40,7 @@
     {
         "preaction": "shock",
         "text": "What the hell is wrong with you?! Go find food somewhere else!",
-        "emotion": "angry",
+        "emotion": "idle",
         "options": [
             {"index":0}
         ]

@@ -3,14 +3,14 @@ class Manifest {
         this._engine = e;
         //this._floor = require('./floor')(this, 'floor', 0, 585).create();
         //this._player = require('./player')(this, 'knight', 500, 650).create();
-        this._dialogue = require('./dialogue')(this, 'knight', 'talk1').create();
+        this._dialog = require('./dialog')(this, 'knight', 'talk1').create();
         this._enemeies = [];
     }
 
     tick() {
         //this._floor.tick();
         //this._player.tick();
-        this._dialogue.tick();
+        this._dialog.tick();
         for(let e of this._enemeies){
             e.tick();
         }

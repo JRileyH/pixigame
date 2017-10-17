@@ -1,11 +1,10 @@
-class Dialogue extends require('./spine'){
-    constructor(m, texture="noimg", script, box_texture='dialogue_box', margins={x:40,y:20}){
+class Dialog extends require('./spine'){
+    constructor(m, texture="noimg", script, box_texture='dialog_box', margins={x:40,y:20}){
         super(m, texture);
         //TODO: figure out how to resolve this properly
-        this._script = require('../../../res/dialogues/'+script+'.json');
+        this._script = require('../../../res/dialogs/'+script+'.json');
         this._convo_index = 0;
         this._convo = this._script[this._convo_index];
-        this.scrollable = false;
         this._dialog_box = new PIXI.Container();
         this._dialog_box_bounds = {
             x: Math.floor(Game.Window.width*0.1),
@@ -53,12 +52,25 @@ class Dialogue extends require('./spine'){
             }
         });
         
-        this.setMouseAction(0, "press", e=>{
-            console.log(e);
-        });
-
         this.setResponseListeners();
+
+        this.scrollUp = e=> {
+            this._dialog_box_text.y+=5;
+            if(this._dialog_box_text.y>0)this._dialog_box_text.y=0;
+        }
+    
+        this.scrollDown = e=> {
+            let max = this._dialog_box_bounds.h-this._dialog_box_text.height;
+            this._dialog_box_text.y-=5;
+            if(this._dialog_box_text.y<=max)this._dialog_box_text.y=max;
+        }
     }
+
+    tick(){
+        super.tick();
+    }
+
+    
 
     setResponseListeners(){
         for(let i = 1; i <=9; i++){
@@ -73,26 +85,33 @@ class Dialogue extends require('./spine'){
     }
 
     next(option){
+        this._dialog_box_text.y=0;
         this._convo_index = this._convo.options[option].index;
         this._convo = this._script[this._convo_index];
+        
+        if(this._convo.preaction!==null){
+            this.setState(this._convo.preaction.emote);
+            this.delay(this._frames_in_cycle*this._convo.preaction.length, ()=>{
+                this.setState(this._convo.emotion);
+            })
+        } else {
+            this.setState(this._convo.emotion);
+        }
         this._dialog_box_text.text = this._convo.text;
         for(let i = 1; this._convo.options[i]!==undefined; i++){
             this._dialog_box_text.text += '\n'+i+". "+this._convo.options[i].response;
         }
         if(this._dialog_box.height<this._dialog_box_text.height){
-            this._scrollable = true;
-            this.setMouseAction(3, "scroll", e=>{//up
-                this._dialog_box_text.y+=5;
-                if(this._dialog_box_text.y<this._dialog_box.y)this._dialog_box_text.y=0;
-            });
-            this.setMouseAction(4, "scroll", e=>{//down
-                this._dialog_box_text.y-=5;
-            });
+            this.setMouseAction(3, "scroll", this.scrollUp);
+            this.setMouseAction(4, "scroll", this.scrollDown);
+            this.setKeyAction(38, "during", this.scrollUp);
+            this.setKeyAction(40, "during", this.scrollDown);
 
         } else {
-            this._scrollable = false;
             this.removeMouseAction(3, "scroll");
             this.removeMouseAction(4, "scroll");
+            this.removeKeyAction(38, "during");
+            this.removeKeyAction(40, "during");
         }
 
         this.setResponseListeners();
@@ -111,7 +130,6 @@ class Dialogue extends require('./spine'){
 
         mask.endFill();
     
-
         return mask;
     }
 
@@ -119,5 +137,5 @@ class Dialogue extends require('./spine'){
 
 module.exports = (...args)=>{
     //do arguements control here
-    return new Dialogue(...args);
+    return new Dialog(...args);
 }

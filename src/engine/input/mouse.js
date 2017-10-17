@@ -27,11 +27,6 @@ class Mouse {
 
         window.addEventListener('wheel', event=>{
             let data = { x:event.offsetX, y:event.offsetY, deltaX: event.deltaX, deltaY: event.deltaY }
-            //0: any
-            //1: left
-            //2: right
-            //3: up
-            //4: down
             this._process_event(0, 'scroll', data);
             if(event.deltaX>0){this._process_event(1, 'scroll', data);}//left
             if(event.deltaX<0){this._process_event(2, 'scroll', data);}//right
