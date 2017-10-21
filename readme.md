@@ -58,7 +58,7 @@ var subscription_id = Input.Keyboard.subscribe(32, "press", ()=>{ // 32 is Space
 Input.Keyboard.unsubscribe(32, "press", subscription_id); //Use the same key code and event name to unsubscribe
 ```
 Keyboard Parameters are:
-1. `Integer` [http://keycode.info/](Key Code),
+1. `Integer` [http://keycode.info](Key Code),
 2. `String` <`"press"`, `"release"`, or `"during"`>,
 3. `function` callback
 
