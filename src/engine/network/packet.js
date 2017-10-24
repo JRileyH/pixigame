@@ -14,6 +14,10 @@ module.exports = class Packet{
         let payload = data===undefined?this._data:data;
         Game.Network.socket.emit(this._name, payload);
     }
+
+    recieve(packet){
+        
+    }
 }
 
 //Abstract Class
