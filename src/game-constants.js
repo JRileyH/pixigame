@@ -8,5 +8,9 @@ module.exports = {
             backgroundColor: 0x308362
         }
     },
-
+    Network: {
+        protocol: 'http',
+        host: 'localhost',
+        port: 1337
+    }
 }

@@ -3,6 +3,11 @@ class Engine {
         this._renderer = require('./renderer')(this);
         this._input = require('./input')(this);
         this._manifest = require('./manifest')(this);
+        this._network = require('./network')(this);
+
+        let test = new this._network.packet('001')();
+
+        test.send('test', {test:'test'});
 
         this._loop=()=>{
             requestAnimationFrame(this._loop);
@@ -31,6 +36,10 @@ class Engine {
 
     get Input() {
         return this._input;
+    }
+
+    get Network() {
+        return this._network;
     }
 
     start(){
