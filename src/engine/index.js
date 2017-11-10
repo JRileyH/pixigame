@@ -2,12 +2,8 @@ class Engine {
     constructor() {
         this._renderer = require('./renderer')(this);
         this._input = require('./input')(this);
-        this._manifest = require('./manifest')(this);
         this._network = require('./network')(this);
-
-        let test = new this._network.packet('001')();
-
-        test.send('test', {test:'test'});
+        this._manifest = require('./manifest')(this);
 
         this._loop=()=>{
             requestAnimationFrame(this._loop);
