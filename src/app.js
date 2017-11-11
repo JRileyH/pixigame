@@ -1,7 +1,7 @@
 require('pixi.js');
 require('pixi-spine');
 window.Game = require('./game-constants');
-Game.Network.socket = require('socket.io-client').connect(Game.Network.protocol+'://'+Game.Network.host+':'+Game.Network.port);
+//Game.Network.socket = require('socket.io-client').connect(Game.Network.protocol+'://'+Game.Network.host+':'+Game.Network.port);
 require('./loader')(setup, progress);
 
 

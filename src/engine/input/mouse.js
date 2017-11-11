@@ -4,6 +4,7 @@ class Mouse {
             press:[],
             release:[],
             during:[],
+            hover:[],
             scroll:[]
         };
         this._buttons = [];
@@ -36,6 +37,13 @@ class Mouse {
             event.preventDefault();
         });
 
+        window.addEventListener('mousemove', event=>{
+            let data = { x:event.offsetX, y:event.offsetY }
+            this._process_event(0, 'hover', data);//enter
+
+            event.preventDefault();
+        });
+
     }
 
     tick(){
@@ -46,21 +54,30 @@ class Mouse {
         }
     }
 
+    _check_bounds(mouse, bounds, alt){
+        let contained = ( (mouse.x > bounds.x && mouse.x < (bounds.x + bounds.w)) && (mouse.y > bounds.y && mouse.y < (bounds.y + bounds.h)) );
+        return alt ? !containted : contained;
+    }
+
     _process_event(button, action, data){
         var subscribed_events = this._subscriptions[action][button];
         if(Array.isArray(subscribed_events)){
             for(let subscribed_event of subscribed_events){
-                if (typeof subscribed_event === "function") {
-                    subscribed_event(data);
+
+                if(subscribed_event.bounds === null || this._check_bounds(data, subscribed_event.bounds)) {
+                    if (typeof subscribed_event.fn === "function") {
+                        subscribed_event.fn(data);
+                    }
                 }
             }
         }
     }
 
-    subscribe(button, action, fn){
+    subscribe(button, action, fn, bounds){
         this._buttons[button] = false;
+        if(typeof(bounds)!=='object' || !bounds.hasOwnProperty('x') || !bounds.hasOwnProperty('y') || !bounds.hasOwnProperty('w') || !bounds.hasOwnProperty('h')) bounds = null;
         if(!Array.isArray(this._subscriptions[action][button]))this._subscriptions[action][button] = [];
-        return this._subscriptions[action][button].push(fn)-1;
+        return this._subscriptions[action][button].push({bounds: bounds, fn: fn})-1;
     }
     unsubscribe(button, action, id){
         if(id!==undefined){

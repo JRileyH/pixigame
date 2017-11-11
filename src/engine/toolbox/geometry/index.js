@@ -1,18 +1,20 @@
 class Geometry {
     constructor() {}
 
-    get Point(...args){
-        return new require('./point')(...args);
+    Point(...args){
+        var p = require('./point');
+        return new p(...args);
     }
 
-    get Rectangle(...args){
-        return new require('./rectangle')(...args);
+    Rectangle(...args){
+        var p = require('./rectangle');
+        return new p()(...args);
     }
     
 }
 
 module.exports = (...args)=>{
     //do arguements control here
-    return new Gemoetry(...args);
+    return new Geometry(...args);
 }
 

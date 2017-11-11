@@ -2,8 +2,12 @@ class Engine {
     constructor() {
         this._renderer = require('./renderer')(this);
         this._input = require('./input')(this);
-        this._network = require('./network')(this);
+        //this._network = require('./network')(this);
         this._manifest = require('./manifest')(this);
+
+        this._toolbox = require('./toolbox')(this);
+
+        var button = this._toolbox.UI.Button().create();
 
         this._loop=()=>{
             requestAnimationFrame(this._loop);
@@ -11,6 +15,9 @@ class Engine {
             this._renderer.tick()
         }
         this._states = {
+            menu: function() {
+                this._input.tick();
+            },
             play: function(){
                 this._input.tick();
                 this._manifest.tick();
@@ -19,7 +26,7 @@ class Engine {
                 console.log('pause');
             }
         }
-        this._state = this._states.play;
+        this._state = this._states.menu;
     }
 
     get Manifest() {
@@ -34,9 +41,13 @@ class Engine {
         return this._input;
     }
 
-    get Network() {
-        return this._network;
+    get Toolbox() {
+        return this._toolbox;
     }
+
+    /*get Network() {
+        return this._network;
+    }*/
 
     start(){
         this._renderer.start();
