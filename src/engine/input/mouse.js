@@ -38,8 +38,10 @@ class Mouse {
         });
 
         window.addEventListener('mousemove', event=>{
-            let data = { x:event.offsetX, y:event.offsetY }
-            this._process_event(0, 'hover', data);//enter
+            let data = { x:event.offsetX, y:event.offsetY}
+            this._process_event(0, 'hover', data);
+            this._process_event(1, 'hover', data);//enter
+            this._process_event(2, 'hover', data, true);//exit
 
             event.preventDefault();
         });
@@ -55,29 +57,33 @@ class Mouse {
     }
 
     _check_bounds(mouse, bounds, alt){
-        let contained = ( (mouse.x > bounds.x && mouse.x < (bounds.x + bounds.w)) && (mouse.y > bounds.y && mouse.y < (bounds.y + bounds.h)) );
-        return alt ? !containted : contained;
+        let contained = ( (mouse.x > bounds.x && mouse.x < (bounds.x + bounds.width)) && (mouse.y > bounds.y && mouse.y < (bounds.y + bounds.height)) );
+        return alt ? !contained : contained;
     }
 
-    _process_event(button, action, data){
+    _process_event(button, action, data, inverse){
         var subscribed_events = this._subscriptions[action][button];
         if(Array.isArray(subscribed_events)){
             for(let subscribed_event of subscribed_events){
-
-                if(subscribed_event.bounds === null || this._check_bounds(data, subscribed_event.bounds)) {
-                    if (typeof subscribed_event.fn === "function") {
-                        subscribed_event.fn(data);
+                if(!subscribed_event.options.spent){
+                    if(subscribed_event.options.bounds === undefined || this._check_bounds(data, subscribed_event.options.bounds, !!inverse)) {
+                        if (typeof subscribed_event.fn === "function") {
+                            subscribed_event.fn(data);
+                            if(subscribed_event.options.fireOnlyOnceWhileInBounds) subscribed_event.options.spent = true
+                        }
                     }
+                } else if(subscribed_event.options.fireOnlyOnceWhileInBounds && this._check_bounds(data, subscribed_event.options.bounds, !inverse)){
+                    subscribed_event.options.spent = false;
                 }
             }
         }
     }
 
-    subscribe(button, action, fn, bounds){
+    subscribe(button, action, fn, options){
         this._buttons[button] = false;
-        if(typeof(bounds)!=='object' || !bounds.hasOwnProperty('x') || !bounds.hasOwnProperty('y') || !bounds.hasOwnProperty('w') || !bounds.hasOwnProperty('h')) bounds = null;
         if(!Array.isArray(this._subscriptions[action][button]))this._subscriptions[action][button] = [];
-        return this._subscriptions[action][button].push({bounds: bounds, fn: fn})-1;
+        if(options.fireOnlyOnceWhileInBounds) options.spent = true;
+        return this._subscriptions[action][button].push({fn: fn, options: options})-1;
     }
     unsubscribe(button, action, id){
         if(id!==undefined){

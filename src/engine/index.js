@@ -7,16 +7,17 @@ class Engine {
 
         this._toolbox = require('./toolbox')(this);
 
-        var button = this._toolbox.UI.Button().create();
+        var button = this._toolbox.UI.Button('Click This').create();
 
         this._loop=()=>{
             requestAnimationFrame(this._loop);
             this._state();
-            this._renderer.tick()
+            this._renderer.tick();
         }
         this._states = {
             menu: function() {
                 this._input.tick();
+                this._toolbox.tick();
             },
             play: function(){
                 this._input.tick();

@@ -10,6 +10,11 @@ class Geometry {
         var p = require('./rectangle');
         return new p()(...args);
     }
+
+    tick() {
+        
+    }
+
     
 }
 

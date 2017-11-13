@@ -6,11 +6,16 @@ class Toolbox {
     }
 
     get Geometry() {
-        return this._geom;
+        return this._geometry;
     }
 
     get UI() {
         return this._ui;
+    }
+
+    tick() {
+        this.UI.tick();
+        this.Geometry.tick();
     }
 }
 

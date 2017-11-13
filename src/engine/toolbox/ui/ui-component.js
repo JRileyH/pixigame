@@ -1,11 +1,11 @@
 module.exports = class UiComponent {
     constructor(u) {
         this._ui = u;
-        this._sprite = PIXI.Sprite.from("data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==");
-        this._sprite.x = 100;
-        this._sprite.y = 100;
-        this._sprite.width = 300;
-        this._sprite.height = 30;
+        this._bounds = new PIXI.Container();
+        this._bounds.x = 100;
+        this._bounds.y = 100;
+        this._bounds.width = 300;
+        this._bounds.height = 30;
 
         this._subscribed_key_actions = {
             press:[],
@@ -20,13 +20,18 @@ module.exports = class UiComponent {
             scroll:[]
         }
     }
+
+    get Bounds(){
+        return this._bounds
+    }
+    
     create(){
-        this._ui.add(this._sprite);
+        this._ui.add(this);
         return this;
     }
 
     destroy(){
-        this._ui.remove(this._sprite);
+        this._ui.remove(this._bounds);
     }
 
     setKeyAction(key, action, event){
@@ -41,9 +46,9 @@ module.exports = class UiComponent {
         this._subscribed_key_actions[action][key] = undefined;
     }
 
-    setMouseAction(button, action, event, bounds){
+    setMouseAction(button, action, event, options){
         if(this._subscribed_mouse_actions[action][button]===undefined){
-            let subscription_id = this._ui._engine.Input.Mouse.subscribe(button, action, event, bounds);
+            let subscription_id = this._ui._engine.Input.Mouse.subscribe(button, action, event, options);
             this._subscribed_mouse_actions[action][button] = subscription_id;
         }
     }
