@@ -1,11 +1,11 @@
 module.exports = class UiComponent {
-    constructor(u) {
+    constructor(u, options) {
         this._ui = u;
         this._bounds = new PIXI.Container();
-        this._bounds.x = 100;
-        this._bounds.y = 100;
-        this._bounds.width = 300;
-        this._bounds.height = 30;
+        this._bounds.x = options.x||options.bounds.x||0;
+        this._bounds.y = options.y||options.bounds.y||0;
+        this._bounds.width = options.width||options.bounds.width||0;
+        this._bounds.height = options.height||options.bounds.height||0;
 
         this._subscribed_key_actions = {
             press:[],

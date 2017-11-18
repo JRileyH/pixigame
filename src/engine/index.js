@@ -7,7 +7,13 @@ class Engine {
 
         this._toolbox = require('./toolbox')(this);
 
-        var button = this._toolbox.UI.Button('Click This').create();
+        var button = this._toolbox.UI.Button('Click This', {
+            bounds: new PIXI.Rectangle(10, 10, 300, 30),
+            click: ()=>{
+                console.log('ive been clicked');
+            },
+            keyboard_activator: 13
+        }).create();
 
         this._loop=()=>{
             requestAnimationFrame(this._loop);

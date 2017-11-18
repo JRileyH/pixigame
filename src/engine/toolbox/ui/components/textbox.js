@@ -1,6 +1,6 @@
 class TextBox extends require('../ui-component'){
     constructor() {
-        
+        super();
     }
 }
 
