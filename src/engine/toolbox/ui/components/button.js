@@ -1,8 +1,7 @@
 class Button extends require('../ui-component'){
     constructor(u, text='', options={}) {
         super(u, options);
-        this._options = options;
-        this._text = new PIXI.Text(text, u.FontOptions);
+        this._text = this._ui.Label(text).create();
         this._sprite = new PIXI.Sprite();
         this._sprite.x = 0;
         this._sprite.y = 0;
@@ -23,7 +22,7 @@ class Button extends require('../ui-component'){
 
     create() {
         super.create();
-        this._bounds.addChild(this._sprite,this._text);
+        this._bounds.addChild(this._sprite,this._text.Bounds);
         return this;
     }
 

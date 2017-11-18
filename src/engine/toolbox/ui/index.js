@@ -9,6 +9,11 @@ class UI {
         return this._font_options;
     }
 
+    Label(...args){
+        let p = require('./components/label')
+        return new p(this, ...args);
+    }
+
     TextBox(...args){
         let p = require('./components/textbox')
         return new p(this, ...args);

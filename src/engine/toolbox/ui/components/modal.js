@@ -15,7 +15,6 @@ module.exports = (...args)=>{
     class Button extends require('../ui-component'){
     constructor(u, text='', options={}) {
         super(u, options);
-        this._options = options;
         this._text = new PIXI.Text(text, u.FontOptions);
         this._sprite = new PIXI.Sprite();
         this._sprite.x = 0;
