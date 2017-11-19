@@ -6,24 +6,24 @@ class Modal extends require('../ui-component'){
         this._background.y = 30;
         this._background.width = this._bounds._width;
         this._background.height = this._bounds._height-30;
-        this._background.texture = !!options.background ? options.background : PIXI.Texture.from('data:image/gif;base64,R0lGODlhAQABAPAAAMzMzP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==');
+        this._background.texture = !!options.background ? options.background : this._ui._default_textures.modal.background;
 
         if(!Array.isArray(this._options.components)) { this._components = [];} else { this._components = this._options.components.slice()}
 
         this._dragbar = this._ui.Button(text,{
             bounds: new PIXI.Rectangle(0, 0, this._bounds._width-60, 30),
             texture: {
-                plain: PIXI.Texture.from('data:image/gif;base64,R0lGODlhAQABAPAAAJmZ3f///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),
-                hover: PIXI.Texture.from('data:image/gif;base64,R0lGODlhAQABAPAAALu7/////yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),
-                click: PIXI.Texture.from('data:image/gif;base64,R0lGODlhAQABAPAAAHd3u////yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==')
+                plain: (typeof options.texture != "undefined" && options.texture.dragbar != "undefined" && options.texture.dragbar.plain) ? options.texture.plain : this._ui._default_textures.modal.dragbar.plain,
+                hover: (typeof options.texture != "undefined" && options.texture.dragbar != "undefined" && options.texture.dragbar.hover) ? options.texture.hover : this._ui._default_textures.modal.dragbar.hover,
+                click: (typeof options.texture != "undefined" && options.texture.dragbar != "undefined" && options.texture.dragbar.click) ? options.texture.click : this._ui._default_textures.modal.dragbar.click
             },
         }).create(this);
         this._closebutton = this._ui.Button(' X',{
             bounds: new PIXI.Rectangle(this._bounds._width-30, 0, 30, 30),
             texture: {
-                plain: PIXI.Texture.from('data:image/gif;base64,R0lGODlhAQABAPAAAP9mZv///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),
-                hover: PIXI.Texture.from('data:image/gif;base64,R0lGODlhAQABAPAAAP+IiP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),
-                click: PIXI.Texture.from('data:image/gif;base64,R0lGODlhAQABAPAAAP9ERP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==')
+                plain: (typeof options.texture != "undefined" && options.texture.closebutton != "undefined" && options.texture.closebutton.plain) ? options.texture.plain : this._ui._default_textures.modal.closebutton.plain,
+                hover: (typeof options.texture != "undefined" && options.texture.closebutton != "undefined" && options.texture.closebutton.hover) ? options.texture.hover : this._ui._default_textures.modal.closebutton.hover,
+                click: (typeof options.texture != "undefined" && options.texture.closebutton != "undefined" && options.texture.closebutton.click) ? options.texture.click : this._ui._default_textures.modal.closebutton.click
             },
             click: ()=>{
                 this.close();
@@ -34,9 +34,9 @@ class Modal extends require('../ui-component'){
         this._minbutton = this._ui.Button('  -',{
             bounds: new PIXI.Rectangle(this._bounds._width-60, 0, 30, 30),
             texture: {
-                plain: PIXI.Texture.from('data:image/gif;base64,R0lGODlhAQABAPAAAP+IAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),
-                hover: PIXI.Texture.from('data:image/gif;base64,R0lGODlhAQABAPAAAP+qIv///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),
-                click: PIXI.Texture.from('data:image/gif;base64,R0lGODlhAQABAPAAAMx3AP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==')
+                plain: (typeof options.texture != "undefined" && options.texture.minbutton != "undefined" && options.texture.minbutton.plain) ? options.texture.plain : this._ui._default_textures.modal.minbutton.plain,
+                hover: (typeof options.texture != "undefined" && options.texture.minbutton != "undefined" && options.texture.minbutton.hover) ? options.texture.hover : this._ui._default_textures.modal.minbutton.hover,
+                click: (typeof options.texture != "undefined" && options.texture.minbutton != "undefined" && options.texture.minbutton.click) ? options.texture.click : this._ui._default_textures.modal.minbutton.click
             },
             click: ()=>{
                 if(this._collapsed){
@@ -89,6 +89,7 @@ class Modal extends require('../ui-component'){
             this._background.visible = false;
             for(let component of this._components){
                 component.Bounds.visible = false;
+                component.disable();
             }
             this._collapsed=true;
         }
@@ -98,6 +99,7 @@ class Modal extends require('../ui-component'){
             this._background.visible = true;
             for(let component of this._components){
                 component.Bounds.visible = true;
+                component.enable();
             }
             this._collapsed=false;
         }

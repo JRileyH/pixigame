@@ -2,6 +2,7 @@ module.exports = class UiComponent {
     constructor(u, options) {
         this._ui = u;
         this._options = options;
+        this._disabled = false;
         this._bounds = new PIXI.Container();
         this._bounds.x = options.x||!!options.bounds?options.bounds.x||0:0;
         this._bounds.y = options.y||!!options.bounds?options.bounds.y||0:0;
@@ -30,6 +31,14 @@ module.exports = class UiComponent {
         this._parent = parent;
         this._ui.add(this);
         return this;
+    }
+
+    enable(){
+        if(this._disabled) this._disabled = false;
+    }
+
+    disable(){
+        if(!this._disabled) this._disabled = true;
     }
 
     destroy(){

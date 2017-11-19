@@ -1,32 +1,65 @@
-class Button extends require('../ui-component'){
+class Checkbox extends require('../ui-component'){
     constructor(u, text='', options={}) {
         super(u, options);
         this._text = this._ui.Label(text).create(this);
+        this._text.Bounds.x = this._bounds._width+10;
+
         this._background = new PIXI.Sprite();
         this._background.x = 0;
         this._background.y = 0;
         this._background.width = this._bounds._width;
         this._background.height = this._bounds._height;
         this._background_state = {
-            plain: (typeof options.texture != "undefined" && options.texture.plain ) ? options.texture.plain : this._ui._default_textures.button.background.plain,
-            hover: (typeof options.texture != "undefined" && options.texture.hover ) ? options.texture.hover : this._ui._default_textures.button.background.hover,
-            click: (typeof options.texture != "undefined" && options.texture.click ) ? options.texture.click : this._ui._default_textures.button.background.click
+            plain: (typeof options.texture != "undefined" && typeof options.texture.background != "undefined" && options.texture.background.plain ) ? options.texture.background.plain : this._ui._default_textures.checkbox.background.plain,
+            hover: (typeof options.texture != "undefined" && typeof options.texture.background != "undefined" && options.texture.background.hover ) ? options.texture.background.hover : this._ui._default_textures.checkbox.background.hover,
+            click: (typeof options.texture != "undefined" && typeof options.texture.background != "undefined" && options.texture.background.click ) ? options.texture.background.click : this._ui._default_textures.checkbox.background.click
         }
         this._background.texture = this._background_state['plain'];
+
+        this._checked = false;
+        this._mark = new PIXI.Sprite();
+        this._mark.x = 5;
+        this._mark.y = 5;
+        this._mark.width = this._bounds._width-10;
+        this._mark.height = this._bounds._height-10;
+        this._mark.texture = (typeof options.texture != "undefined" && typeof options.texture.mark != "undefined") ? options.texture.mark : this._ui._default_textures.checkbox.mark;
+        this._mark.visible = false;
     }
 
     create(parent) {
         super.create(parent);
 
-        this._setClick(this._options.click, this._options.mouse_activator);
+        let overloaded_click = ()=>{
+            if(this._checked){
+                this.uncheck();
+            } else {
+                this.check();
+            }
+            if(typeof(this._options.click)!=='function') this._options.click(this._checked);
+        }
+
+        this._setClick(overloaded_click, this._options.mouse_activator);
         this._setEnter(this._options.enter);
         this._setExit(this._options.exit);
-        if(this._options.keyboard_activator) this._setKey(this._options.click, this._options.keyboard_activator);
+        if(this._options.keyboard_activator) this._setKey(overloaded_click, this._options.keyboard_activator);
 
-        this._bounds.addChild(this._background,this._text.Bounds);
+        this._bounds.addChild(this._background,this._text.Bounds, this._mark);
         return this;
     }
 
+    check(){
+        this._mark.visible = true;
+        this._checked = true;
+    }
+    uncheck(){
+        this._mark.visible = false;
+        this._checked = false;
+    }
+
+    get value(){
+        return this._checked;
+    }
+    
     enable(){
         super.enable();
         this._background.texture = this._background_state['plain'];
@@ -91,5 +124,5 @@ class Button extends require('../ui-component'){
 
 module.exports = (...args)=>{
     //do arguements control here
-    return new Button(...args);
+    return new Checkbox(...args);
 }

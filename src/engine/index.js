@@ -7,25 +7,21 @@ class Engine {
 
         this._toolbox = require('./toolbox')(this);
 
-        var button = this._toolbox.UI.Button('Click This', {
-            bounds: new PIXI.Rectangle(10, 10, 300, 30),
-            click: ()=>{
-                console.log('ive been clicked');
-            },
-            keyboard_activator: 13
-        }).create(null);
 
         var modal = this._toolbox.UI.Modal('Drag Me', {
             bounds: new PIXI.Rectangle(200, 200, 400, 500),
             components: [
-                this._toolbox.UI.Label('This is a great modal', {
-                    bounds: new PIXI.Rectangle(10, 50, 0, 0)
+                this._toolbox.UI.Label('Label', {
+                    bounds: new PIXI.Rectangle(10, 40, 0, 0)
                 }),
-                this._toolbox.UI.Button('Click Inside', {
-                    bounds: new PIXI.Rectangle(10, 150, 300, 70),
+                this._toolbox.UI.Button('Button', {
+                    bounds: new PIXI.Rectangle(10, 80, 300, 30),
                     click: ()=>{
-                        console.log('you clicked inside');
+                        console.log('You clicked the button');
                     }
+                }),
+                this._toolbox.UI.Checkbox('Checkbox', {
+                    bounds: new PIXI.Rectangle(10, 130, 30, 30)
                 })
             ]
         }).create(null);

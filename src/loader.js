@@ -1,5 +1,7 @@
 module.exports = (cb, handleProgress)=>{
     PIXI.loader
+    //colors
+        //.add()
     //skeletons
         .add('alien', 'res/skeletons/alien.json')
         .add('knight', 'res/skeletons/knight.json')
