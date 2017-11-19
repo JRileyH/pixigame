@@ -13,7 +13,22 @@ class Engine {
                 console.log('ive been clicked');
             },
             keyboard_activator: 13
-        }).create();
+        }).create(null);
+
+        var modal = this._toolbox.UI.Modal('Drag Me', {
+            bounds: new PIXI.Rectangle(200, 200, 400, 500),
+            components: [
+                this._toolbox.UI.Label('This is a great modal', {
+                    bounds: new PIXI.Rectangle(10, 50, 0, 0)
+                }),
+                this._toolbox.UI.Button('Click Inside', {
+                    bounds: new PIXI.Rectangle(10, 150, 300, 70),
+                    click: ()=>{
+                        console.log('you clicked inside');
+                    }
+                })
+            ]
+        }).create(null);
 
         this._loop=()=>{
             requestAnimationFrame(this._loop);

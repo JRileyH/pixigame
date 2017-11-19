@@ -21,18 +21,19 @@ module.exports = class UiComponent {
             scroll:[]
         }
     }
-
+    
     get Bounds(){
-        return this._bounds
+        return this._bounds;
     }
     
-    create(){
+    create(parent){
+        this._parent = parent;
         this._ui.add(this);
         return this;
     }
 
     destroy(){
-        this._ui.remove(this._bounds);
+        this._bounds.parent.removeChild(this._bounds);
     }
 
     setKeyAction(key, action, event){

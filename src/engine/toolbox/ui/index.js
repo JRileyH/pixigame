@@ -36,7 +36,8 @@ class UI {
     }
 
     remove(component){
-        this._components[component._id] = undefined;
+        console.log(component);
+        //this._components[component._id] = undefined;
         this._engine._renderer._stage.removeChild(component.Bounds);
     }
 
