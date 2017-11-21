@@ -9,6 +9,10 @@ class Label extends require('../ui-component'){
         this._bounds.addChild(this._text);
         return this;
     }
+
+    setText(newText){
+        this._text.text = newText;
+    }
 }
 
 module.exports = (...args)=>{

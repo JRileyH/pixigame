@@ -21,7 +21,7 @@ class Engine {
                 this._toolbox.UI.Checkbox('Checkbox', {
                     bounds: new PIXI.Rectangle(10, 100, 30, 30)
                 }),
-                this._toolbox.UI.Textbox('Textbox', {
+                this._toolbox.UI.Textbox('1234', {
                     bounds: new PIXI.Rectangle(10, 150, 300, 30)
                 })
             ]
