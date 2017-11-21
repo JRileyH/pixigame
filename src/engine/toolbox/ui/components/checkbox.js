@@ -6,12 +6,8 @@ class Checkbox extends require('../clickable-component'){
         this._text.Bounds.x = this._bounds._width+10;
 
         this._checked = false;
-        this._mark = new PIXI.Sprite();
-        this._mark.x = 5;
-        this._mark.y = 5;
-        this._mark.width = this._bounds._width-10;
-        this._mark.height = this._bounds._height-10;
-        this._mark.texture = (typeof options.texture != "undefined" && typeof options.texture.mark != "undefined") ? options.texture.mark : u._default_textures.checkbox.mark;
+
+        this._mark = this._createContainer(new PIXI.Rectangle(5, 5, this._bounds._width-10, this._bounds._height-10), options.texture.mark || u._default_textures.checkbox.mark)
         this._mark.visible = false;
 
         this._options.click = ()=>{

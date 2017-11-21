@@ -1,32 +1,33 @@
 class Modal extends require('../ui-component'){
     constructor(u, text='', options={}) {
+        options.margin = options.margin || 30;
+        if(options.texture === undefined) options.texture = {};
+        if(options.texture.dragbar === undefined) options.texture.dragbar = {};
+        if(options.texture.closebutton === undefined) options.texture.closebutton = {};
+        if(options.texture.minbutton === undefined) options.texture.minbutton = {};
         super(u, options);
-        this._background = new PIXI.Sprite();
-        this._background.x = 0;
-        this._background.y = 30;
-        this._background.width = this._bounds._width;
-        this._background.height = this._bounds._height-30;
-        this._background.texture = !!options.background ? options.background : this._ui._default_textures.modal.background;
-
+        
+        this._background = this._createContainer(new PIXI.Rectangle(0, options.margin, this._bounds._width, this._bounds._height-options.margin), (options.background || this._ui._default_textures.modal.background))
         if(!Array.isArray(this._options.components)) { this._components = [];} else { this._components = this._options.components.slice()}
 
         this._dragbar = this._ui.Button(text,{
-            bounds: new PIXI.Rectangle(0, 0, this._bounds._width-60, 30),
+            bounds: new PIXI.Rectangle(0, 0, this._bounds._width-(options.margin*2), options.margin),
             texture: {
                 background: {
-                    plain: (typeof options.texture != "undefined" && options.texture.dragbar != "undefined" && options.texture.dragbar.plain) ? options.texture.plain : this._ui._default_textures.modal.dragbar.plain,
-                    hover: (typeof options.texture != "undefined" && options.texture.dragbar != "undefined" && options.texture.dragbar.hover) ? options.texture.hover : this._ui._default_textures.modal.dragbar.hover,
-                    click: (typeof options.texture != "undefined" && options.texture.dragbar != "undefined" && options.texture.dragbar.click) ? options.texture.click : this._ui._default_textures.modal.dragbar.click
+                    plain: options.texture.dragbar.plain || this._ui._default_textures.modal.dragbar.plain,
+                    hover: options.texture.dragbar.hover || this._ui._default_textures.modal.dragbar.hover,
+                    click: options.texture.dragbar.click || this._ui._default_textures.modal.dragbar.click
                 }
             },
         }).create(this);
+
         this._closebutton = this._ui.Button(' X',{
-            bounds: new PIXI.Rectangle(this._bounds._width-30, 0, 30, 30),
+            bounds: new PIXI.Rectangle(this._bounds._width-options.margin, 0, options.margin, options.margin),
             texture: {
                 background: {
-                    plain: (typeof options.texture != "undefined" && options.texture.closebutton != "undefined" && options.texture.closebutton.plain) ? options.texture.plain : this._ui._default_textures.modal.closebutton.plain,
-                    hover: (typeof options.texture != "undefined" && options.texture.closebutton != "undefined" && options.texture.closebutton.hover) ? options.texture.hover : this._ui._default_textures.modal.closebutton.hover,
-                    click: (typeof options.texture != "undefined" && options.texture.closebutton != "undefined" && options.texture.closebutton.click) ? options.texture.click : this._ui._default_textures.modal.closebutton.click
+                    plain: options.texture.closebutton.plain || this._ui._default_textures.modal.closebutton.plain,
+                    hover: options.texture.closebutton.hover || this._ui._default_textures.modal.closebutton.hover,
+                    click: options.texture.closebutton.click || this._ui._default_textures.modal.closebutton.click
                 }
             },
             click: ()=>{
@@ -35,13 +36,13 @@ class Modal extends require('../ui-component'){
         }).create(this);
 
         this._collapsed = false;
-        this._minbutton = this._ui.Button('  -',{
-            bounds: new PIXI.Rectangle(this._bounds._width-60, 0, 30, 30),
+        this._minbutton = this._ui.Button(' --',{
+            bounds: new PIXI.Rectangle(this._bounds._width-(options.margin*2), 0, options.margin, options.margin),
             texture: {
                 background: {
-                    plain: (typeof options.texture != "undefined" && options.texture.minbutton != "undefined" && options.texture.minbutton.plain) ? options.texture.plain : this._ui._default_textures.modal.minbutton.plain,
-                    hover: (typeof options.texture != "undefined" && options.texture.minbutton != "undefined" && options.texture.minbutton.hover) ? options.texture.hover : this._ui._default_textures.modal.minbutton.hover,
-                    click: (typeof options.texture != "undefined" && options.texture.minbutton != "undefined" && options.texture.minbutton.click) ? options.texture.click : this._ui._default_textures.modal.minbutton.click
+                    plain: options.texture.minbutton.plain || this._ui._default_textures.modal.minbutton.plain,
+                    hover: options.texture.minbutton.hover || this._ui._default_textures.modal.minbutton.hover,
+                    click: options.texture.minbutton.click || this._ui._default_textures.modal.minbutton.click
                 }
             },
             click: ()=>{
@@ -82,6 +83,7 @@ class Modal extends require('../ui-component'){
         super.create(parent);
         this._bounds.addChild(this._background, this._dragbar.Bounds, this._closebutton.Bounds, this._minbutton.Bounds);
         for(let component of this._components){
+            component.Bounds.y += this._options.margin
             this._bounds.addChild(component.create(this).Bounds)
         }
         return this;

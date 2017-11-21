@@ -3,11 +3,7 @@ module.exports = class UiComponent {
         this._ui = u;
         this._options = options;
         this._disabled = false;
-        this._bounds = new PIXI.Container();
-        this._bounds.x = options.x||!!options.bounds?options.bounds.x||0:0;
-        this._bounds.y = options.y||!!options.bounds?options.bounds.y||0:0;
-        this._bounds.width = options.width||!!options.bounds?options.bounds.width||0:0;
-        this._bounds.height = options.height||!!options.bounds?options.bounds.height||0:0;
+        this._bounds = this._createContainer(options.bounds);
 
         this._subscribed_key_actions = {
             press:[],
@@ -27,6 +23,21 @@ module.exports = class UiComponent {
         return this._bounds;
     }
     
+    _createContainer(rect, texture){
+        let container;
+        if(texture===undefined){
+            container = new PIXI.Container();
+        } else {
+            container = new PIXI.Sprite();
+            container.texture = texture;
+        }
+        container.x = !!rect?rect.x||0:0;
+        container.y = !!rect?rect.y||0:0;
+        container.width = !!rect?rect.width||0:0;
+        container.height = !!rect?rect.height||0:0;
+        return container;
+    }
+
     create(parent){
         this._parent = parent;
         this._ui.add(this);

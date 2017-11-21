@@ -9,12 +9,7 @@ module.exports = class ClickableComponent extends require('./ui-component'){
         
         this._text = this._ui.Label(text).create(this);
 
-        this._background = new PIXI.Sprite();
-        this._background.x = 0;
-        this._background.y = 0;
-        this._background.width = this._bounds._width;
-        this._background.height = this._bounds._height;
-        this._background.texture = options.texture.background.plain;
+        this._background = this._createContainer(new PIXI.Rectangle(0, 0, this._bounds._width, this._bounds._height), options.texture.background.plain)
         this._background_state = options.texture.background;
     }
 
