@@ -5,7 +5,7 @@ class UI {
         this._font_options = {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'};
         this._default_textures = {
             modal: {
-                background: PIXI.loader.resources['white'].texture,
+                background: PIXI.loader.resources['light-gray'].texture,
                 dragbar:{
                     plain: PIXI.loader.resources['blue'].texture,
                     hover: PIXI.loader.resources['light-blue'].texture,
@@ -29,13 +29,21 @@ class UI {
                     click: PIXI.loader.resources['dark-green'].texture,
                 }
             },
-            checkbox: {
+            textbox: {
                 background:{
                     plain: PIXI.loader.resources['yellow'].texture,
                     hover: PIXI.loader.resources['light-yellow'].texture,
                     click: PIXI.loader.resources['dark-yellow'].texture,
                 },
-                mark: PIXI.loader.resources['dark-yellow'].texture
+                focus: PIXI.loader.resources['black'].texture
+            },
+            checkbox: {
+                background:{
+                    plain: PIXI.loader.resources['purple'].texture,
+                    hover: PIXI.loader.resources['light-purple'].texture,
+                    click: PIXI.loader.resources['dark-purple'].texture,
+                },
+                mark: PIXI.loader.resources['black'].texture
             }
         }
     }
@@ -49,7 +57,7 @@ class UI {
         return new p(this, ...args);
     }
 
-    TextBox(...args){
+    Textbox(...args){
         let p = require('./components/textbox')
         return new p(this, ...args);
     }

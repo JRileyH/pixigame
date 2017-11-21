@@ -43,7 +43,7 @@ class Mouse {
             let data = { x:event.offsetX, y:event.offsetY}
             this._process_event(0, 'hover', data);
             this._process_event(1, 'hover', data);//enter
-            this._process_event(2, 'hover', data, true);//exit
+            this._process_event(2, 'hover', data);//exit
 
             event.preventDefault();
         });
@@ -70,18 +70,18 @@ class Mouse {
         return alt ? !contained : contained;
     }
 
-    _process_event(button, action, data, inverse){
+    _process_event(button, action, data){
         var subscribed_events = this._subscriptions[action][button];
         if(Array.isArray(subscribed_events)){
             for(let subscribed_event of subscribed_events){
                 if(!subscribed_event.options.spent){
-                    if(subscribed_event.options.bounds === undefined || this._check_bounds(data, subscribed_event.options.bounds, !!inverse)) {
+                    if(subscribed_event.options.bounds === undefined || this._check_bounds(data, subscribed_event.options.bounds, !!subscribed_event.options.inverted)) {
                         if (typeof subscribed_event.fn === "function") {
                             subscribed_event.fn(data);
                             if(subscribed_event.options.fireOnlyOnceWhileInBounds) subscribed_event.options.spent = true
                         }
                     }
-                } else if(subscribed_event.options.fireOnlyOnceWhileInBounds && this._check_bounds(data, subscribed_event.options.bounds, !inverse)){
+                } else if(subscribed_event.options.fireOnlyOnceWhileInBounds && this._check_bounds(data, subscribed_event.options.bounds, !subscribed_event.options.inverted)){
                     subscribed_event.options.spent = false;
                 }
             }

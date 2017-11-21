@@ -4,23 +4,25 @@ class Engine {
         this._input = require('./input')(this);
         //this._network = require('./network')(this);
         this._manifest = require('./manifest')(this);
-
         this._toolbox = require('./toolbox')(this);
         
         var modal = this._toolbox.UI.Modal('Drag Me', {
-            bounds: new PIXI.Rectangle(200, 200, 400, 500),
+            bounds: new PIXI.Rectangle(200, 100, 400, 500),
             components: [
                 this._toolbox.UI.Label('Label', {
-                    bounds: new PIXI.Rectangle(10, 40, 0, 0)
+                    bounds: new PIXI.Rectangle(10, 10, 0, 0)
                 }),
                 this._toolbox.UI.Button('Button', {
-                    bounds: new PIXI.Rectangle(10, 80, 300, 30),
+                    bounds: new PIXI.Rectangle(10, 50, 300, 30),
                     click: ()=>{
                         console.log('You clicked the button');
                     }
                 }),
                 this._toolbox.UI.Checkbox('Checkbox', {
-                    bounds: new PIXI.Rectangle(10, 130, 30, 30)
+                    bounds: new PIXI.Rectangle(10, 100, 30, 30)
+                }),
+                this._toolbox.UI.Textbox('Textbox', {
+                    bounds: new PIXI.Rectangle(10, 150, 300, 30)
                 })
             ]
         }).create(null);
