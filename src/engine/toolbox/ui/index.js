@@ -3,7 +3,6 @@ class UI {
         this._engine = e;
         this._components = [];
         this._font_options = {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'};
-        console.log(PIXI.loader.resources);
         this._default_textures = {
             modal: {
                 background: PIXI.loader.resources['white'].texture,
@@ -71,20 +70,27 @@ class UI {
     }
 
     add(component){
-        let id = this._components.push(component)-1;
-        component._id = id;
+        let found_spot = false;
+        for(let i in this._components){
+            if(this._components[i]===undefined){
+                component._id = i;
+                this._components[i] = component;
+                found_spot = true;
+                break;
+            }
+        }
+         if (!found_spot) component._id = this._components.push(component)-1;
         this._engine._renderer._stage.addChild(component.Bounds);
     }
 
     remove(component){
-        console.log(component);
-        //this._components[component._id] = undefined;
+        this._components[component._id] = undefined;
         this._engine._renderer._stage.removeChild(component.Bounds);
     }
 
     tick(){
         for(let component of this._components){
-            component.tick();
+            if(component) component.tick();
         }
     }
     

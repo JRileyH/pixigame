@@ -6,8 +6,7 @@ class Engine {
         this._manifest = require('./manifest')(this);
 
         this._toolbox = require('./toolbox')(this);
-
-
+        
         var modal = this._toolbox.UI.Modal('Drag Me', {
             bounds: new PIXI.Rectangle(200, 200, 400, 500),
             components: [

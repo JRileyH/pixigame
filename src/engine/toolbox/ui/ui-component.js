@@ -42,7 +42,7 @@ module.exports = class UiComponent {
     }
 
     destroy(){
-        this._bounds.parent.removeChild(this._bounds);
+        this._ui.remove(this);
     }
 
     setKeyAction(key, action, event){
