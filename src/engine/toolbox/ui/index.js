@@ -2,7 +2,7 @@ class UI {
     constructor(e) {
         this._engine = e;
         this._components = [];
-        this._font_options = {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'left', wordWrap : true, wordWrapWidth : 300 };
+        this._font_options = {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'left' };
         this._default_textures = {
             modal: {
                 background: PIXI.loader.resources['light-gray'].texture,

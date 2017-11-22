@@ -51,13 +51,7 @@ class Textbox extends require('../clickable-component'){
                 }
                 event.preventDefault();
             }
-
-            
         });
-
-        
-        
-
     }
 
     create(parent){
@@ -66,14 +60,6 @@ class Textbox extends require('../clickable-component'){
         //set z-index to back
         this._bounds.children.unshift(this._bounds.children.pop());
         this._bounds.addChild(this._text.Bounds, this._cursor);
-
-        let initPost = this._bounds.toGlobal(this.Bounds);
-        console.log(this._ui._engine.Renderer._stage.toGlobal(this.Bounds))
-        console.log(this.Bounds.toGlobal(this._ui._engine.Renderer._stage))
-
-        console.log(this.Bounds.worldTransform)
-        console.log(this.Bounds.worldTransform.ty)
-        
         return this;
     }
 
@@ -81,22 +67,9 @@ class Textbox extends require('../clickable-component'){
         return this._pre_str+this._post_str;
     }
 
-    moveMask(){
-        this._mask = new PIXI.Graphics();
-        this._mask.drawRect(this.Bounds.worldTransform.tx,this.Bounds.worldTransform.ty,this._background._width,this._background._height);
-        this.Bounds.mask = this._mask;
-    }
-
     _placeCursor(){
         let metric = TextMetrics.measureText(this._pre_str,this._style);
-        let delta = metric.width-this._background.width+(this._options.margin*2)
-        if(delta>-this._options.margin) { // text too big for box
-            if(this._cursor.x !== this._background.width-this._options.margin) this._cursor.x = this._background.width-this._options.margin;
-            this._text.Bounds.x -= delta + this._text.Bounds.x
-        } else { // text within bounds
-            if(this._text.Bounds.x!==this._options.margin) this._text.Bounds.x=this._options.margin;
-            this._cursor.x = metric.width+2;
-        }
+        this._cursor.x = metric.width+2;
     }
     _moveCursor(dir){
         if(typeof(dir)==='string'){
@@ -141,9 +114,6 @@ class Textbox extends require('../clickable-component'){
         this._focus_outline.visible = false;
         this._cursor.visible = false;
         this._focused = false;
-    }
-    tick(){
-        this.moveMask()
     }
 }
 

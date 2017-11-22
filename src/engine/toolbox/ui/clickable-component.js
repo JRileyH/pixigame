@@ -14,6 +14,7 @@ module.exports = class ClickableComponent extends require('./ui-component'){
     }
 
     create(parent) {
+        super.create(parent);
         this._setClick(this._options.click, this._options.mouse_activator);
         this._setEnter(this._options.enter);
         this._setExit(this._options.exit);
