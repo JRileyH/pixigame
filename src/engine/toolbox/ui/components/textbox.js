@@ -2,17 +2,18 @@ import { Rectangle } from 'pixi.js';
 
 class Textbox extends require('../clickable-component'){
     constructor(u, text='', options={}) {
+        if(options.margin===undefined)options.margin=2;
         options.component_type = 'textbox';
         super(u, '', options);
-        this._focus_outline = this._createContainer(new Rectangle(-2,-2,this._bounds._width+4,this._bounds._height+4), u._default_textures.textbox.focus);
-        this._focus_outline.visible = false;
 
-        
+        this._style = !!options.style ? new PIXI.TextStyle(options.style) : new PIXI.TextStyle(u.FontOptions)
+        this._focus_outline = this._createContainer(new Rectangle(-options.margin,-options.margin,this._bounds._width+(options.margin*2),this._bounds._height+(options.margin*2)), u._default_textures.textbox.focus);
+        this._focus_outline.visible = false;
         this._pre_str = text;
         this._post_str = '';
-        this._style = !!options.style ? new PIXI.TextStyle(options.style) : new PIXI.TextStyle(u.FontOptions)
-        let metric = PIXI.TextMetrics.measureText(this._pre_str,this._style)
-        this._cursor = this._createContainer(new Rectangle(metric.width+2,2,2,this._bounds._height-4), u._default_textures.textbox.focus);
+
+        this._cursor = this._createContainer(new Rectangle(PIXI.TextMetrics.measureText(this._pre_str,this._style).width+options.margin,options.margin,1,this._bounds._height-(options.margin*2)), u._default_textures.textbox.focus);
+        this._cursor.visible = false;
 
         this._text = this._ui.Label(this.value).create(this);
 
@@ -26,9 +27,15 @@ class Textbox extends require('../clickable-component'){
             this.unfocus();
         }, { bounds: this._background, inverted: true});
 
+        this._submit = typeof(options.submit)==='function'? options.submit : function(){}
+
+        this.submit = () => {
+            this.unfocus();
+            this._submit(this.value);
+        }
+
         window.addEventListener("keydown", event=>{
             if(this._focused){
-                console.log(event.key);
                 if(event.key.length===1){
                     this._addText(event.key);
                 } else if(event.key==='Backspace'){
@@ -37,6 +44,8 @@ class Textbox extends require('../clickable-component'){
                     this._moveCursor('left');
                 } else if(event.key==='ArrowRight'){
                     this._moveCursor('right');
+                } else if(event.key==='Enter'){
+                    this.submit(this.value);
                 }
                 event.preventDefault();
             }
@@ -96,10 +105,12 @@ class Textbox extends require('../clickable-component'){
     }
     focus(){
         this._focus_outline.visible = true;
+        this._cursor.visible = true;
         this._focused = true;
     }
     unfocus(){
         this._focus_outline.visible = false;
+        this._cursor.visible = false;
         this._focused = false;
     }
 }

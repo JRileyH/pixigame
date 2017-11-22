@@ -22,7 +22,11 @@ class Engine {
                     bounds: new PIXI.Rectangle(10, 100, 30, 30)
                 }),
                 this._toolbox.UI.Textbox('1234', {
-                    bounds: new PIXI.Rectangle(10, 150, 300, 30)
+                    bounds: new PIXI.Rectangle(10, 150, 300, 30),
+                    margin: 4,
+                    submit:function(val){
+                        console.log('Submitted: '+val);
+                    }
                 })
             ]
         }).create(null);
