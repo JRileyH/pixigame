@@ -62,6 +62,11 @@ class UI {
         return new p(this, ...args);
     }
 
+    Textarea(...args){
+        let p = require('./components/textarea')
+        return new p(this, ...args);
+    }
+
     Modal(...args){
         let p = require('./components/modal');
         return new p(this, ...args);

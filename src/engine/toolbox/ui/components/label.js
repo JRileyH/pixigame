@@ -1,7 +1,10 @@
+import { TextStyle } from 'pixi.js';
+
 class Label extends require('../ui-component'){
     constructor(u, text='', options={}) {
         super(u, options);
-        this._text = new PIXI.Text(text, u.FontOptions);
+        this._style = !!options.style ? new TextStyle(options.style) : new TextStyle(u.FontOptions)
+        this._text = new PIXI.Text(text, this._style);
     }
 
     create(parent) {

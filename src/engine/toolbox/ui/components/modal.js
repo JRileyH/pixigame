@@ -67,15 +67,14 @@ class Modal extends require('../ui-component'){
             this._dragging=false;
             if(this.x<0)this.x=0;
             if(this.y<0)this.y=0;
-            if(this.x+this.Container.width>Game.Window.width)this.x=Game.Window.width-this.Container.width;
+            if(this.x+this.width>Game.Window.width)this.x = Game.Window.width-this.Container.width;
             if(this.y+30>Game.Window.height)this.y=Game.Window.height-30;
             
         });
 
         this.setMouseAction(0,"during",data=>{
             if(this._dragging){
-                this.x = data.x-this._offset.x
-                this.y = data.y-this._offset.y
+                this.move(data.x-this._offset.x, data.y-this._offset.y);
             }
         });
 

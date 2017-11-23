@@ -21,8 +21,15 @@ class Engine {
                 this._toolbox.UI.Checkbox('Checkbox', {
                     bounds: new PIXI.Rectangle(10, 100, 30, 30)
                 }),
-                this._toolbox.UI.Textbox('1234', {
+                this._toolbox.UI.Textbox('Textbox', {
                     bounds: new PIXI.Rectangle(10, 150, 300, 30),
+                    margin: 4,
+                    submit:function(val){
+                        console.log('Submitted: '+val);
+                    }
+                }),
+                this._toolbox.UI.Textarea('Textarea', {
+                    bounds: new PIXI.Rectangle(10, 200, 300, 30),
                     margin: 4,
                     submit:function(val){
                         console.log('Submitted: '+val);

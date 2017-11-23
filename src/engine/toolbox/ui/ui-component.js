@@ -83,8 +83,14 @@ module.exports = class UiComponent {
     get x(){
         return this._container.x;
     }
+    set x(val){
+        this._container.x = val;
+    }
     get y(){
         return this._container.y;
+    }
+    set y(val){
+        this._container.y= val;
     }
     get width(){
         return this._container._width;

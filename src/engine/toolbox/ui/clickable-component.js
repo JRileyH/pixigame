@@ -27,11 +27,27 @@ module.exports = class ClickableComponent extends require('./ui-component'){
 
     enable(){
         super.enable();
-        this._background.texture = this._background_state['plain'];
+        this._setState('plain');
     }
     disable(){
         super.disable();
         //set background to disable state
+    }
+
+    resize(w,h){
+        super.resize(w,h)
+        this._background._width = this.width;
+        this._background._height = this.height;
+    }
+    scale(w,h){
+        super.resize(w,h)
+        this._background._width = this.width;
+        this._background._height = this.height;
+    }
+
+    _setState(state){
+        this._state = state;
+        this._background.texture = this._background_state[state];
     }
 
     _setClick(fn=()=>{}, btn=0) {
@@ -40,12 +56,12 @@ module.exports = class ClickableComponent extends require('./ui-component'){
         this._options.click = fn;
         this.setMouseAction(btn,"press",()=>{
             if(!this._disabled) {
-                this._background.texture = this._background_state['click'];
+                this._setState('click');
             }
         }, { bounds: this._background });
         this.setMouseAction(btn,"release",()=>{
             if(!this._disabled) {
-                this._background.texture = this._background_state['hover'];
+                this._setState('hover');
                 fn();
             }
         }, { bounds: this._background});
@@ -55,12 +71,12 @@ module.exports = class ClickableComponent extends require('./ui-component'){
         if(typeof(key)!=='number') throw Error('key value must be function');
         this.setKeyAction(key,"press",()=>{
             if(!this._disabled) {
-                this._background.texture = this._background_state['click'];
+                this._setState('click');
             }
         });
         this.setKeyAction(key,"release",()=>{
             if(!this._disabled) {
-                this._background.texture = this._background_state['plain'];
+                this._setState('plain');
                 fn()
             }
         });
@@ -70,7 +86,7 @@ module.exports = class ClickableComponent extends require('./ui-component'){
         if(typeof(fn)!=='function') throw Error('click value must be function');
         this.setMouseAction(0,"hover",()=>{
             if(!this._disabled) {
-                this._background.texture = this._background_state['hover'];
+                this._setState('hover');
                 fn();
             }
         }, { bounds: this._background, fireOnlyOnceWhileInBounds: true });
@@ -79,7 +95,7 @@ module.exports = class ClickableComponent extends require('./ui-component'){
         if(typeof(fn)!=='function') throw Error('click value must be function');
         this.setMouseAction(1,"hover",()=>{
             if(!this._disabled) {
-                this._background.texture = this._background_state['plain'];
+                this._setState('plain');
                 fn();
             }
         }, { bounds: this._background, fireOnlyOnceWhileInBounds: true, inverted: true});

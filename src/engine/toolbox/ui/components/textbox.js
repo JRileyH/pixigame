@@ -2,71 +2,12 @@ import { Rectangle } from 'pixi.js';
 import { TextStyle } from 'pixi.js';
 import { TextMetrics } from 'pixi.js';
 
-class Textbox extends require('../clickable-component'){
+class Textbox extends require('../typable-component'){
     constructor(u, text='', options={}) {
         if(options.margin===undefined)options.margin=2;
         options.component_type = 'textbox';
         super(u, '', options);
-
-        this._style = !!options.style ? new TextStyle(options.style) : new TextStyle(u.FontOptions)
-        this._focus_outline = this._createContainer(new Rectangle(-options.margin,-options.margin,this.width+(options.margin*2),this.height+(options.margin*2)), u._default_textures.textbox.focus);
-        this._focus_outline.visible = false;
-        this._pre_str = text;
-        this._post_str = '';
-
-        this._cursor = this._createContainer(new Rectangle(TextMetrics.measureText(this._pre_str,this._style).width+options.margin,options.margin,1,this.height-(options.margin*2)), u._default_textures.textbox.focus);
-        this._cursor.visible = false;
-
-        this._text = this._ui.Label(this.value).create(this);
-
-        this._focused = false;
-
-        this._options.click = ()=>{
-            if(!this._focused) this.focus();
-            if(typeof(options.click)!=='function') options.click(this._checked);
-        }
-        this.setMouseAction(this._options.mouse_activator||0,"press",()=>{
-            this.unfocus();
-        }, { bounds: this._background, inverted: true});
-
-        this._submit = typeof(options.submit)==='function'? options.submit : function(){}
-
-        this.submit = () => {
-            this.unfocus();
-            this._submit(this.value);
-        }
-
-        window.addEventListener("keydown", event=>{
-            if(this._focused){
-                if(event.key.length===1){
-                    this._addText(event.key);
-                } else if(event.key==='Backspace'){
-                    this._delText();
-                } else if(event.key==='ArrowLeft'){
-                    this._moveCursor('left');
-                } else if(event.key==='ArrowRight'){
-                    this._moveCursor('right');
-                } else if(event.key==='Enter'){
-                    this.submit(this.value);
-                }
-                event.preventDefault();
-            }
-        });
-
     
-    }
-
-    create(parent){
-        super.create(parent);
-        this.Container.addChild(this._focus_outline);
-        //set z-index to back
-        this.Container.children.unshift(this.Container.children.pop());
-        this.Container.addChild(this._text.Container, this._cursor);
-        return this;
-    }
-
-    get value(){
-        return this._pre_str+this._post_str;
     }
 
     moveMask(){
@@ -75,7 +16,8 @@ class Textbox extends require('../clickable-component'){
         this.Container.mask = this._mask;
     }
 
-    _placeCursor(){
+    _ontype(){
+        super._onType();
         let metric = TextMetrics.measureText(this._pre_str,this._style);
         let delta = metric.width-this._background.width+(this._options.margin*2)
         if(delta>-this._options.margin) { // text too big for box
@@ -105,32 +47,12 @@ class Textbox extends require('../clickable-component'){
                 break;
             }
             this._text.setText(this.value);
-            this._placeCursor();
         }
     }
-    _addText(char){
-        this._pre_str+=char;
-        this._text.setText(this.value);
-        this._placeCursor();
-    }
-    _delText(){
-        if(this._pre_str.length>0){
-            this._pre_str = this._pre_str.slice(0, -1);
-            this._text.setText(this.value);
-            this._placeCursor();
-        }
-    }
-    focus(){
-        this._focus_outline.visible = true;
-        this._cursor.visible = true;
-        this._focused = true;
-    }
-    unfocus(){
-        this._focus_outline.visible = false;
-        this._cursor.visible = false;
-        this._focused = false;
-    }
+   
+
     tick(){
+        super.tick();
         this.moveMask()
     }
 }
