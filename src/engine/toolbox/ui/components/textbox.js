@@ -9,12 +9,12 @@ class Textbox extends require('../clickable-component'){
         super(u, '', options);
 
         this._style = !!options.style ? new TextStyle(options.style) : new TextStyle(u.FontOptions)
-        this._focus_outline = this._createContainer(new Rectangle(-options.margin,-options.margin,this._bounds._width+(options.margin*2),this._bounds._height+(options.margin*2)), u._default_textures.textbox.focus);
+        this._focus_outline = this._createContainer(new Rectangle(-options.margin,-options.margin,this.width+(options.margin*2),this.Contianer._height+(options.margin*2)), u._default_textures.textbox.focus);
         this._focus_outline.visible = false;
         this._pre_str = text;
         this._post_str = '';
 
-        this._cursor = this._createContainer(new Rectangle(TextMetrics.measureText(this._pre_str,this._style).width+options.margin,options.margin,1,this._bounds._height-(options.margin*2)), u._default_textures.textbox.focus);
+        this._cursor = this._createContainer(new Rectangle(TextMetrics.measureText(this._pre_str,this._style).width+options.margin,options.margin,1,this.height-(options.margin*2)), u._default_textures.textbox.focus);
         this._cursor.visible = false;
 
         this._text = this._ui.Label(this.value).create(this);
@@ -51,29 +51,17 @@ class Textbox extends require('../clickable-component'){
                 }
                 event.preventDefault();
             }
-
-            
         });
 
-        
-        
-
+    
     }
 
     create(parent){
         super.create(parent);
-        this._bounds.addChild(this._focus_outline);
+        this.Container.addChild(this._focus_outline);
         //set z-index to back
-        this._bounds.children.unshift(this._bounds.children.pop());
-        this._bounds.addChild(this._text.Bounds, this._cursor);
-
-        let initPost = this._bounds.toGlobal(this.Bounds);
-        console.log(this._ui._engine.Renderer._stage.toGlobal(this.Bounds))
-        console.log(this.Bounds.toGlobal(this._ui._engine.Renderer._stage))
-
-        console.log(this.Bounds.worldTransform)
-        console.log(this.Bounds.worldTransform.ty)
-        
+        this.Container.children.unshift(this.Container.children.pop());
+        this.Container.addChild(this._text.Container, this._cursor);
         return this;
     }
 
@@ -83,8 +71,8 @@ class Textbox extends require('../clickable-component'){
 
     moveMask(){
         this._mask = new PIXI.Graphics();
-        this._mask.drawRect(this.Bounds.worldTransform.tx,this.Bounds.worldTransform.ty,this._background._width,this._background._height);
-        this.Bounds.mask = this._mask;
+        this._mask.drawRect(this.Container.worldTransform.tx,this.Container.worldTransform.ty,this._background._width,this._background._height);
+        this.Container.mask = this._mask;
     }
 
     _placeCursor(){
@@ -92,9 +80,9 @@ class Textbox extends require('../clickable-component'){
         let delta = metric.width-this._background.width+(this._options.margin*2)
         if(delta>-this._options.margin) { // text too big for box
             if(this._cursor.x !== this._background.width-this._options.margin) this._cursor.x = this._background.width-this._options.margin;
-            this._text.Bounds.x -= delta + this._text.Bounds.x
+            this._text.Container.x -= delta + this._text.Container.x
         } else { // text within bounds
-            if(this._text.Bounds.x!==this._options.margin) this._text.Bounds.x=this._options.margin;
+            if(this._text.Container.x!==this._options.margin) this._text.Container.x=this._options.margin;
             this._cursor.x = metric.width+2;
         }
     }

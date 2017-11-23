@@ -7,11 +7,12 @@ class Modal extends require('../ui-component'){
         if(options.texture.minbutton === undefined) options.texture.minbutton = {};
         super(u, options);
         
-        this._background = this._createContainer(new PIXI.Rectangle(0, options.margin, this._bounds._width, this._bounds._height-options.margin), (options.background || this._ui._default_textures.modal.background))
+        this._background = this._createContainer(new PIXI.Rectangle(0, options.margin, this.width, this.height-options.margin), (options.background || this._ui._default_textures.modal.background));
+        
         if(!Array.isArray(this._options.components)) { this._components = [];} else { this._components = this._options.components.slice()}
 
         this._dragbar = this._ui.Button(text,{
-            bounds: new PIXI.Rectangle(0, 0, this._bounds._width-(options.margin*2), options.margin),
+            bounds: new PIXI.Rectangle(0, 0, this.width-(options.margin*2), options.margin),
             texture: {
                 background: {
                     plain: options.texture.dragbar.plain || this._ui._default_textures.modal.dragbar.plain,
@@ -22,7 +23,7 @@ class Modal extends require('../ui-component'){
         }).create(this);
 
         this._closebutton = this._ui.Button(' X',{
-            bounds: new PIXI.Rectangle(this._bounds._width-options.margin, 0, options.margin, options.margin),
+            bounds: new PIXI.Rectangle(this.width-options.margin, 0, options.margin, options.margin),
             texture: {
                 background: {
                     plain: options.texture.closebutton.plain || this._ui._default_textures.modal.closebutton.plain,
@@ -37,7 +38,7 @@ class Modal extends require('../ui-component'){
 
         this._collapsed = false;
         this._minbutton = this._ui.Button(' --',{
-            bounds: new PIXI.Rectangle(this._bounds._width-(options.margin*2), 0, options.margin, options.margin),
+            bounds: new PIXI.Rectangle(thiswidth-(options.margin*2), 0, options.margin, options.margin),
             texture: {
                 background: {
                     plain: options.texture.minbutton.plain || this._ui._default_textures.modal.minbutton.plain,
@@ -57,34 +58,34 @@ class Modal extends require('../ui-component'){
         this.setMouseAction(0,"press",data=>{
             this._dragging=true;
             this._offset = {
-                x: data.x-this._bounds.getGlobalPosition().x,
-                y: data.y-this._bounds.getGlobalPosition().y
+                x: data.x-this.Container.getGlobalPosition().x,
+                y: data.y-this.Container.getGlobalPosition().y
             }
-        }, { bounds: this._dragbar.Bounds });
+        }, { bounds: this._dragbar.Container });
 
         this.setMouseAction(0,"release",data=>{
             this._dragging=false;
-            if(this._bounds.x<0)this._bounds.x=0;
-            if(this._bounds.y<0)this._bounds.y=0;
-            if(this._bounds.x+this._bounds.width>Game.Window.width)this._bounds.x=Game.Window.width-this._bounds.width;
-            if(this._bounds.y+30>Game.Window.height)this._bounds.y=Game.Window.height-30;
+            if(this.x<0)this.x=0;
+            if(this.y<0)this.y=0;
+            if(this.x+this.Container.width>Game.Window.width)this.x=Game.Window.width-this.Container.width;
+            if(this.y+30>Game.Window.height)this.y=Game.Window.height-30;
             
         });
 
         this.setMouseAction(0,"during",data=>{
             if(this._dragging){
-                this._bounds.x = data.x-this._offset.x
-                this._bounds.y = data.y-this._offset.y
+                this.x = data.x-this._offset.x
+                this.y = data.y-this._offset.y
             }
         });
 
     }
     create(parent) {
         super.create(parent);
-        this._bounds.addChild(this._background, this._dragbar.Bounds, this._closebutton.Bounds, this._minbutton.Bounds);
+        this.Container.addChild(this._background, this._dragbar.Container, this._closebutton.Container, this._minbutton.Container);
         for(let component of this._components){
-            component.Bounds.y += this._options.margin
-            this._bounds.addChild(component.create(this).Bounds)
+            component.Container.y += this._options.margin
+            this.Container.addChild(component.create(this).Container)
         }
         return this;
     }
@@ -96,7 +97,7 @@ class Modal extends require('../ui-component'){
         if(!this._collapsed){
             this._background.visible = false;
             for(let component of this._components){
-                component.Bounds.visible = false;
+                component.Container.visible = false;
                 component.disable();
             }
             this._collapsed=true;
@@ -106,7 +107,7 @@ class Modal extends require('../ui-component'){
         if(this._collapsed){
             this._background.visible = true;
             for(let component of this._components){
-                component.Bounds.visible = true;
+                component.Container.visible = true;
                 component.enable();
             }
             this._collapsed=false;

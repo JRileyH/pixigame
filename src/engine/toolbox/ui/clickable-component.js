@@ -9,7 +9,7 @@ module.exports = class ClickableComponent extends require('./ui-component'){
         
         if(typeof(text==='string') && text.length>0) this._text = this._ui.Label(text).create(this);
 
-        this._background = this._createContainer(new PIXI.Rectangle(0, 0, this._bounds._width, this._bounds._height), options.texture.background.plain)
+        this._background = this._createContainer(new PIXI.Rectangle(0, 0, this.width, this.height), options.texture.background.plain)
         this._background_state = options.texture.background;
     }
 
@@ -20,8 +20,8 @@ module.exports = class ClickableComponent extends require('./ui-component'){
         this._setExit(this._options.exit);
         if(this._options.keyboard_activator) this._setKey(this._options.click, this._options.keyboard_activator);
 
-        this._bounds.addChild(this._background);
-        if(!!this._text) this._bounds.addChild(this._text.Bounds);
+        this.Container.addChild(this._background);
+        if(!!this._text) this.Container.addChild(this._text.Container);
         return this;
     }
 

@@ -3,11 +3,11 @@ class Checkbox extends require('../clickable-component'){
         options.component_type = 'checkbox';
         super(u, text, options);
 
-        this._text.Bounds.x = this._bounds._width+10;
+        this._text.Container.x = this.width+10;
 
         this._checked = false;
 
-        this._mark = this._createContainer(new PIXI.Rectangle(5, 5, this._bounds._width-10, this._bounds._height-10), options.texture.mark || u._default_textures.checkbox.mark)
+        this._mark = this._createContainer(new PIXI.Rectangle(5, 5, this.width-10, this.height-10), options.texture.mark || u._default_textures.checkbox.mark)
         this._mark.visible = false;
 
         this._options.click = ()=>{
@@ -22,7 +22,7 @@ class Checkbox extends require('../clickable-component'){
 
     create(parent){
         super.create(parent);
-        this._bounds.addChild(this._mark);
+        this.Container.addChild(this._mark);
         return this;
     }
 

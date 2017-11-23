@@ -6,7 +6,7 @@ class Label extends require('../ui-component'){
 
     create(parent) {
         super.create(parent);
-        this._bounds.addChild(this._text);
+        this.Container.addChild(this._text);
         return this;
     }
 

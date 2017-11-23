@@ -88,12 +88,12 @@ class UI {
             }
         }
          if (!found_spot) component._id = this._components.push(component)-1;
-        this._engine._renderer._stage.addChild(component.Bounds);
+        this._engine._renderer._stage.addChild(component.Container);
     }
 
     remove(component){
         this._components[component._id] = undefined;
-        this._engine._renderer._stage.removeChild(component.Bounds);
+        this._engine._renderer._stage.removeChild(component.Container);
     }
 
     tick(){

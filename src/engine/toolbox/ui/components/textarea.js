@@ -9,12 +9,12 @@ class Textbox extends require('../clickable-component'){
         super(u, '', options);
 
         this._style = !!options.style ? new TextStyle(options.style) : new TextStyle(u.FontOptions)
-        this._focus_outline = this._createContainer(new Rectangle(-options.margin,-options.margin,this._bounds._width+(options.margin*2),this._bounds._height+(options.margin*2)), u._default_textures.textbox.focus);
+        this._focus_outline = this._createContainer(new Rectangle(-options.margin,-options.margin,this.width+(options.margin*2),this.height+(options.margin*2)), u._default_textures.textbox.focus);
         this._focus_outline.visible = false;
         this._pre_str = text;
         this._post_str = '';
 
-        this._cursor = this._createContainer(new Rectangle(TextMetrics.measureText(this._pre_str,this._style).width+options.margin,options.margin,1,this._bounds._height-(options.margin*2)), u._default_textures.textbox.focus);
+        this._cursor = this._createContainer(new Rectangle(TextMetrics.measureText(this._pre_str,this._style).width+options.margin,options.margin,1,this.height-(options.margin*2)), u._default_textures.textbox.focus);
         this._cursor.visible = false;
 
         this._text = this._ui.Label(this.value).create(this);
@@ -56,10 +56,10 @@ class Textbox extends require('../clickable-component'){
 
     create(parent){
         super.create(parent);
-        this._bounds.addChild(this._focus_outline);
+        this.Container.addChild(this._focus_outline);
         //set z-index to back
-        this._bounds.children.unshift(this._bounds.children.pop());
-        this._bounds.addChild(this._text.Bounds, this._cursor);
+        this.Container.children.unshift(this.Container.children.pop());
+        this.Container.addChild(this._text.Container, this._cursor);
         return this;
     }
 

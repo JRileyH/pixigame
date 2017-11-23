@@ -3,7 +3,7 @@ module.exports = class UiComponent {
         this._ui = u;
         this._options = options;
         this._disabled = false;
-        this._bounds = this._createContainer(options.bounds);
+        this._container = this._createContainer(options.bounds);
 
         this._subscribed_key_actions = {
             press:[],
@@ -19,8 +19,8 @@ module.exports = class UiComponent {
         }
     }
     
-    get Bounds(){
-        return this._bounds;
+    get Container(){
+        return this._container;
     }
     
     _createContainer(rect, texture){
@@ -78,6 +78,35 @@ module.exports = class UiComponent {
         let id = this._subscribed_mouse_actions[action][button];
         this._ui._engine.Input.Mouse.unsubscribe(button, action, id);
         this._subscribed_mouse_actions[action][button] = undefined;
+    }
+
+    get x(){
+        return this._container.x;
+    }
+    get y(){
+        return this._container.y;
+    }
+    get width(){
+        return this._container._width;
+    }
+    get height(){
+        return this._container._height;
+    }
+    move(x,y){
+        this._container.x = x;
+        this._container.y = y;
+    }
+    slide(x,y){
+        this._container.x += x;
+        this._container.y += y;
+    }
+    resize(w,h){
+        this._container._width = w;
+        this._container._height = h;
+    }
+    scale(w,h){
+        this._container._width += w;
+        this._container._height += h;
     }
 
     tick(){
