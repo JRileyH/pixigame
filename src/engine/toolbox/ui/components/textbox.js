@@ -9,7 +9,7 @@ class Textbox extends require('../clickable-component'){
         super(u, '', options);
 
         this._style = !!options.style ? new TextStyle(options.style) : new TextStyle(u.FontOptions)
-        this._focus_outline = this._createContainer(new Rectangle(-options.margin,-options.margin,this.width+(options.margin*2),this.Contianer._height+(options.margin*2)), u._default_textures.textbox.focus);
+        this._focus_outline = this._createContainer(new Rectangle(-options.margin,-options.margin,this.width+(options.margin*2),this.height+(options.margin*2)), u._default_textures.textbox.focus);
         this._focus_outline.visible = false;
         this._pre_str = text;
         this._post_str = '';

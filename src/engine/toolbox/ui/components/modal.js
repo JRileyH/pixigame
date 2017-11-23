@@ -38,7 +38,7 @@ class Modal extends require('../ui-component'){
 
         this._collapsed = false;
         this._minbutton = this._ui.Button(' --',{
-            bounds: new PIXI.Rectangle(thiswidth-(options.margin*2), 0, options.margin, options.margin),
+            bounds: new PIXI.Rectangle(this.width-(options.margin*2), 0, options.margin, options.margin),
             texture: {
                 background: {
                     plain: options.texture.minbutton.plain || this._ui._default_textures.modal.minbutton.plain,
