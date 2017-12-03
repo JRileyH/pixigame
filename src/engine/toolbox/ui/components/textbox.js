@@ -5,9 +5,9 @@ import { TextMetrics } from 'pixi.js';
 class Textbox extends require('../typable-component'){
     constructor(u, text='', options={}) {
         if(options.margin===undefined)options.margin=2;
+        options.style = !!options.style ? options.style : u.FontOptions
         options.component_type = 'textbox';
-        super(u, '', options);
-    
+        super(u, text, options);
     }
 
     moveMask(){
@@ -16,7 +16,7 @@ class Textbox extends require('../typable-component'){
         this.Container.mask = this._mask;
     }
 
-    _ontype(){
+    _onType(){
         super._onType();
         let metric = TextMetrics.measureText(this._pre_str,this._style);
         let delta = metric.width-this._background.width+(this._options.margin*2)
@@ -46,7 +46,6 @@ class Textbox extends require('../typable-component'){
                  }
                 break;
             }
-            this._text.setText(this.value);
         }
     }
    

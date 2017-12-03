@@ -44,6 +44,10 @@ module.exports = class ClickableComponent extends require('./clickable-component
                     this._moveCursor('left');
                 } else if(event.key==='ArrowRight'){
                     this._moveCursor('right');
+                } else if(event.key==='ArrowUp'){
+                    this._moveCursor('up');
+                } else if(event.key==='ArrowDown'){
+                    this._moveCursor('down');
                 } else if(event.key==='Enter'){
                     this.submit(this.value);
                 }

@@ -36,13 +36,13 @@ module.exports = class ClickableComponent extends require('./ui-component'){
 
     resize(w,h){
         super.resize(w,h)
-        this._background._width = this.width;
-        this._background._height = this.height;
+        this._background.width = this.width;
+        this._background.height = this.height;
     }
     scale(w,h){
         super.resize(w,h)
-        this._background._width = this.width;
-        this._background._height = this.height;
+        this._background.width = this.width;
+        this._background.height = this.height;
     }
 
     _setState(state){
