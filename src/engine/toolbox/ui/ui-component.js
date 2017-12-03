@@ -110,7 +110,7 @@ module.exports = class UiComponent {
         this._container._width = w;
         this._container._height = h;
     }
-    scale(w,h){
+    stretch(w,h){
         this._container._width += w;
         this._container._height += h;
     }

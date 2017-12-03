@@ -14,6 +14,7 @@ class Engine {
                 }),
                 this._toolbox.UI.Button('Button', {
                     bounds: new PIXI.Rectangle(10, 50, 300, 30),
+                    keyboard_activator: 13,
                     click: ()=>{
                         console.log('You clicked the button');
                     }

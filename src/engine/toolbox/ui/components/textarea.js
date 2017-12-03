@@ -15,13 +15,18 @@ class Textarea extends require('../typable-component'){
 
     _onType(){
         super._onType();
-        if(this._num_of_lines != this._full_metric.lineWidths.length){
-            this._num_of_lines = this._full_metric.lineWidths.length;
-            this.resize(this.width, this._num_of_lines * this._full_metric.lineHeight)
+        if(this._num_of_lines != this._full_metric.lines.length){
+            this._num_of_lines = this._full_metric.lines.length;
+            this.resize(this.width, this._num_of_lines * this._line_height)
         }
-        this._current_line = this._pre_metric.lineWidths.length-1;
-        this._cursor.x = this._pre_metric.lineWidths[this._current_line]+this._options.margin
-        this._cursor.y = (this._pre_metric.lineHeight*this._current_line)+this._options.margin;
+        this._current_line = this._pre_metric.lines.length-1;
+
+        this._cursor.x = this._pre_metric.lineWidths[this._current_line];
+        this._cursor.y = (this._line_height*this._current_line)+this._options.margin;
+        if(this._cursor.x+this._char_width>this.width && this._current_line+1!==this._num_of_lines){
+            this._cursor.x = 0;
+            this._cursor.y += this._line_height;
+        }
     }
 
     _moveCursor(dir){

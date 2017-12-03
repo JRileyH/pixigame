@@ -11,6 +11,8 @@ module.exports = class ClickableComponent extends require('./clickable-component
 
         this._pre_metric = TextMetrics.measureText(this._pre_str,this._style);
         this._full_metric = TextMetrics.measureText(this.value,this._style);
+        this._line_height = this._full_metric.lineHeight;
+        this._char_width = TextMetrics.measureText(" ",this._style).width;
 
         this._cursor = this._createContainer(new Rectangle(this._pre_metric.width+options.margin,options.margin,1,this.height-(options.margin*2)), u._default_textures.textbox.focus);
         this._cursor.visible = false;
@@ -39,13 +41,10 @@ module.exports = class ClickableComponent extends require('./clickable-component
 
         window.addEventListener("keydown", event=>{
             if(this._focused){
-                let updated = false;
                 if(event.key.length===1){
                     this._addText(event.key);
-                    updated = true;
                 } else if(event.key==='Backspace'){
                     this._delText();
-                    updated = true;
                 } else if(event.key==='ArrowLeft'){
                     this._moveCursor('left');
                 } else if(event.key==='ArrowRight'){
@@ -57,7 +56,7 @@ module.exports = class ClickableComponent extends require('./clickable-component
                 } else if(event.key==='Enter'){
                     this.submit(this.value);
                 }
-                this._onType(updated);
+                this._onType();
                 event.preventDefault();
             }
         });
@@ -75,7 +74,7 @@ module.exports = class ClickableComponent extends require('./clickable-component
 
     _onType(updated=false){
         this._pre_metric = TextMetrics.measureText(this._pre_str,this._style);
-        if(updated) this._full_metric = TextMetrics.measureText(this.value,this._style);
+        this._full_metric = TextMetrics.measureText(this.value,this._style);
     }
     _addText(char){
         this._pre_str+=char;
