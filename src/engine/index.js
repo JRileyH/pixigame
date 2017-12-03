@@ -28,7 +28,7 @@ class Engine {
                         console.log('Submitted: '+val);
                     }
                 }),
-                this._toolbox.UI.Textarea('Textarea', {
+                this._toolbox.UI.Textarea('Textarea Textarea Textarea Textarea Textarea Textarea Textarea Textarea Textarea Textarea Textarea', {
                     bounds: new PIXI.Rectangle(10, 200, 300, 30),
                     margin: 4,
                     submit:function(val){

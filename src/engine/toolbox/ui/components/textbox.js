@@ -18,37 +18,15 @@ class Textbox extends require('../typable-component'){
 
     _onType(){
         super._onType();
-        let metric = TextMetrics.measureText(this._pre_str,this._style);
-        let delta = metric.width-this._background.width+(this._options.margin*2)
+        let delta = this._pre_metric.width-this._background.width+(this._options.margin*2)
         if(delta>-this._options.margin) { // text too big for box
             if(this._cursor.x !== this._background.width-this._options.margin) this._cursor.x = this._background.width-this._options.margin;
             this._text.Container.x -= delta + this._text.Container.x
         } else { // text within bounds
             if(this._text.Container.x!==this._options.margin) this._text.Container.x=this._options.margin;
-            this._cursor.x = metric.width+2;
+            this._cursor.x = this._pre_metric.width+2;
         }
     }
-    _moveCursor(dir){
-        if(typeof(dir)==='string'){
-            switch(dir){
-                case 'left':
-                if(this._pre_str.length>0){
-                    let char = this._pre_str.substr(-1);
-                    this._pre_str = this._pre_str.substr(0,this._pre_str.length-1);
-                    this._post_str = char+this._post_str;
-                }
-                break;
-                case 'right':
-                if(this._post_str.length>0){
-                    let char = this._post_str.substr(0,1);
-                    this._post_str = this._post_str.slice(1);
-                    this._pre_str = this._pre_str+char;
-                 }
-                break;
-            }
-        }
-    }
-   
 
     tick(){
         super.tick();
