@@ -1,10 +1,21 @@
 class Toolbox {
-    constructor() {
-        this._geometry = require('./geometry')(this);
+    constructor(e) {
+        this._engine = e;
+        this._geometry = require('./geometry')();
+        this._ui = require('./ui')(e);
     }
 
     get Geometry() {
-        return this._geom;
+        return this._geometry;
+    }
+
+    get UI() {
+        return this._ui;
+    }
+
+    tick() {
+        this.UI.tick();
+        this.Geometry.tick();
     }
 }
 

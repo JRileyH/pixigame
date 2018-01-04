@@ -1,6 +1,6 @@
 class Rectangle extends require('./shape'){
     constructor(x, y, w, h) {
-        
+        super();
     }
 }
 
