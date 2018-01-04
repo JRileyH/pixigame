@@ -1,5 +1,6 @@
 class Keyboard {
     constructor() {
+        this._active = true;
         this._subscriptions = {
             press:[],
             release:[],
@@ -8,12 +9,11 @@ class Keyboard {
         this._keys = [];
 
         window.addEventListener("keydown", event=>{
-            //console.log(event.keyCode);
             if(!this._keys[event.keyCode]){
                 this._keys[event.keyCode]=true;
                 this._process_event(event.keyCode, 'press');
             }
-            event.preventDefault();
+            if(this._active){event.preventDefault();}
         });
         window.addEventListener("keyup", event=>{
             this._keys[event.keyCode]=false;
@@ -24,19 +24,23 @@ class Keyboard {
     }
 
     tick(){
-        for(let index in this._subscriptions.during){
-            if(this._keys[index]){
-                this._process_event(index, 'during');
+        if(this._active){
+            for(let index in this._subscriptions.during){
+                if(this._keys[index]){
+                    this._process_event(index, 'during');
+                }
             }
         }
     }
 
     _process_event(key, action){
-        var subscribed_events = this._subscriptions[action][key];
-        if(Array.isArray(subscribed_events)){
-            for(let subscribed_event of subscribed_events){
-                if (typeof subscribed_event === "function") {
-                    subscribed_event();
+        if(this._active){
+            var subscribed_events = this._subscriptions[action][key];
+            if(Array.isArray(subscribed_events)){
+                for(let subscribed_event of subscribed_events){
+                    if (typeof subscribed_event === "function") {
+                        subscribed_event();
+                    }
                 }
             }
         }
@@ -51,6 +55,14 @@ class Keyboard {
         if(id!==undefined){
             this._subscriptions[action][key][id] = undefined;
         }
+    }
+
+    activate(){
+        this._active = true;
+    }
+
+    deactivate(){
+        this._active = false;
     }
 }
 

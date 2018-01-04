@@ -5,6 +5,8 @@ import { TextMetrics } from 'pixi.js';
 module.exports = class ClickableComponent extends require('./clickable-component'){
     constructor(u, text, options) {
         super(u, text, options)
+
+        this._handler = this._ui._engine.Input.Keyboard;
         this._style = !!options.style ? new TextStyle(options.style) : new TextStyle(u.FontOptions)
         this._pre_str = text;
         this._post_str = '';
@@ -53,11 +55,15 @@ module.exports = class ClickableComponent extends require('./clickable-component
                     this._moveCursor('up');
                 } else if(event.key==='ArrowDown'){
                     this._moveCursor('down');
-                } else if(event.key==='Enter'){
-                    this.submit(this.value);
                 }
                 this._onType();
                 event.preventDefault();
+            }
+        });
+
+        window.addEventListener("keyup", event=>{
+            if(event.key==='Enter' && this._focused){
+                this.submit(this.value);
             }
         });
     }
@@ -114,9 +120,11 @@ module.exports = class ClickableComponent extends require('./clickable-component
     focus(){
         this._cursor.visible = true;
         this._focused = true;
+        this._handler.deactivate();
     }
     unfocus(){
         this._cursor.visible = false;
         this._focused = false;
+        this._handler.activate();
     }
 }
