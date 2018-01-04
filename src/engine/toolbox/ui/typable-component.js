@@ -17,7 +17,7 @@ module.exports = class ClickableComponent extends require('./clickable-component
         this._cursor = this._createContainer(new Rectangle(this._pre_metric.width+options.margin,options.margin,1,this.height-(options.margin*2)), u._default_textures.textbox.focus);
         this._cursor.visible = false;
 
-        this._text = this._ui.Label(this.value, {
+        if(!this._text) this._text = this._ui.Label(this.value, {
             style: this._style
         }).create(this);
 
