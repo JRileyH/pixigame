@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cookies-js": "^1.2.3",
     "pixi-spine": "^1.5.7",
     "pixi.js": "^4.5.6",
     "socket.io": "^2.0.3"

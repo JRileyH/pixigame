@@ -2,38 +2,39 @@ class Engine {
     constructor() {
         this._renderer = require('./renderer')(this);
         this._input = require('./input')(this);
-        //this._network = require('./network')(this);
+        this._network = require('./network')(this);
         this._manifest = require('./manifest')(this);
         this._toolbox = require('./toolbox')(this);
-        
-        var modal = this._toolbox.UI.Modal('Drag Me', {
+
+        this.username_box = this._toolbox.UI.Textbox('Anon', {
+            bounds: new PIXI.Rectangle(135, 10, 250, 30)
+        });
+        this.hostip_box = this._toolbox.UI.Textbox('', {
+            bounds: new PIXI.Rectangle(120, 100, 250, 30)
+        });
+
+        var modal = this._toolbox.UI.Modal('Network', {
             bounds: new PIXI.Rectangle(200, 100, 400, 500),
             components: [
-                this._toolbox.UI.Label('Label', {
+                this._toolbox.UI.Label('UserName: ', {
                     bounds: new PIXI.Rectangle(10, 10, 0, 0)
                 }),
-                this._toolbox.UI.Button('Button', {
-                    bounds: new PIXI.Rectangle(10, 50, 300, 30),
-                    keyboard_activator: 13,
+                this.username_box,
+                this._toolbox.UI.Button(' Host', {
+                    bounds: new PIXI.Rectangle(10, 50, 67, 30),
                     click: ()=>{
-                        console.log('You clicked the button');
+                        console.log('Host Game');
+                        concosle.log(this._network);
                     }
                 }),
-                this._toolbox.UI.Checkbox('Checkbox', {
-                    bounds: new PIXI.Rectangle(10, 100, 30, 30)
+                this._toolbox.UI.Label('Game ID:', {
+                    bounds: new PIXI.Rectangle(10, 100, 0, 0),
                 }),
-                this._toolbox.UI.Textbox('Textbox', {
-                    bounds: new PIXI.Rectangle(10, 150, 300, 30),
-                    margin: 4,
-                    submit:function(val){
-                        console.log('Submitted: '+val);
-                    }
-                }),
-                this._toolbox.UI.Textarea('Textarea Textarea Textarea Textarea Textarea Textarea Textarea Textarea Textarea Textarea Textarea', {
-                    bounds: new PIXI.Rectangle(10, 200, 300, 30),
-                    margin: 4,
-                    submit:function(val){
-                        console.log('Submitted: '+val);
+                this.hostip_box,
+                this._toolbox.UI.Button(' Join', {
+                    bounds: new PIXI.Rectangle(10, 150, 67, 30),
+                    click: ()=>{
+                        if(this.hostip_box.value) console.log('Join Game '+this.hostip_box.value);
                     }
                 })
             ]
@@ -76,9 +77,9 @@ class Engine {
         return this._toolbox;
     }
 
-    /*get Network() {
+    get Network() {
         return this._network;
-    }*/
+    }
 
     start(){
         this._renderer.start();
