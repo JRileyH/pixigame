@@ -24,7 +24,7 @@ class Engine {
                     bounds: new PIXI.Rectangle(10, 50, 67, 30),
                     click: ()=>{
                         console.log('Host Game');
-                        concosle.log(this._network);
+                        console.log(this._network);
                     }
                 }),
                 this._toolbox.UI.Label('Game ID:', {
