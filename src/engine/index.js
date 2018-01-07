@@ -24,7 +24,12 @@ class Engine {
                     bounds: new PIXI.Rectangle(10, 50, 67, 30),
                     click: ()=>{
                         console.log('Host Game');
-                        console.log(this._network);
+                        Game.Network.socket.emit('host', {
+                            cid: Cookies.get('cid') || null,
+                            sid: Game.Network.socket.id,
+                            username: this.username_box.value,
+                            role: 'host'
+                        });
                     }
                 }),
                 this._toolbox.UI.Label('Game ID:', {
