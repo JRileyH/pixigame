@@ -9,7 +9,7 @@ class Engine {
         this.username_box = this._toolbox.UI.Textbox('Anon', {
             bounds: new PIXI.Rectangle(135, 10, 250, 30)
         });
-        this.hostip_box = this._toolbox.UI.Textbox('', {
+        this.room_box = this._toolbox.UI.Textbox('', {
             bounds: new PIXI.Rectangle(120, 100, 250, 30)
         });
 
@@ -23,23 +23,29 @@ class Engine {
                 this._toolbox.UI.Button(' Host', {
                     bounds: new PIXI.Rectangle(10, 50, 67, 30),
                     click: ()=>{
-                        console.log('Host Game');
                         Game.Network.socket.emit('host', {
                             cid: Cookies.get('cid') || null,
                             sid: Game.Network.socket.id,
+                            rid: Cookies.get('rid') || null,                            
                             username: this.username_box.value,
                             role: 'host'
                         });
                     }
                 }),
-                this._toolbox.UI.Label('Game ID:', {
+                this._toolbox.UI.Label('Room:', {
                     bounds: new PIXI.Rectangle(10, 100, 0, 0),
                 }),
-                this.hostip_box,
+                this.room_box,
                 this._toolbox.UI.Button(' Join', {
                     bounds: new PIXI.Rectangle(10, 150, 67, 30),
                     click: ()=>{
-                        if(this.hostip_box.value) console.log('Join Game '+this.hostip_box.value);
+                        Game.Network.socket.emit('join', {
+                            cid: Cookies.get('cid') || null,
+                            sid: Game.Network.socket.id,
+                            rid: this.room_box.value.toUpperCase(),
+                            username: this.username_box.value,
+                            role: 'guest'
+                        });
                     }
                 })
             ]

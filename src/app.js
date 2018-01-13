@@ -9,6 +9,9 @@ Game.Network.socket = require('socket.io-client').connect(
 Game.Network.socket.on('create_cid', function (data) {
     Cookies.set('cid', data.cid, { expires: data.expiration });
 });
+Game.Network.socket.on('create_rid', function (data) {
+    Cookies.set('rid', data.rid, { expires: data.expiration });
+});
 require('./loader')(setup, progress);
 
 function progress(loader, resource){
