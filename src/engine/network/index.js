@@ -1,21 +1,39 @@
 class Network {
     constructor(e) {
         this._engine = e;
-        this._packets = {};
+        this._socket = Game.Network.socket;
+
+        this._socket.on('connect_request', function (data) {
+            console.log('Connection Information Requested');
+        });
+        this._socket.on('connect_host', function (data) {
+            console.log('Connect As Host');
+        });
+        this._socket.on('connect_guest', function (data) {
+            console.log('Connect As Guest');
+        });
     }
 
-    packet(id){
-        if(!this._packets[id]){
-            try{
-                let p = require('./packets/'+id+'-packet');
-                this._packets[id] = new p();
-                this._packets[id].init();
-            }catch(e){
-                console.error(e);
-                return null;
-            }
+    host(){
+        this._socket.emit('host', {
+            cid: Cookies.get('cid') || null,
+            sid: this._socket.id,          
+            username: 'Test-Host',
+            role: 'host'
+        });
+    }
+    join(rid){
+        if(typeof rid !== 'string' && rid.length !== 4){
+            throw Error('room id is not valid: '+rid);
+            return;
         }
-        return this._packets[id];
+        this._socket.emit('join', {
+            cid: Cookies.get('cid') || null,
+            sid: Game.Network.socket.id,
+            rid: rid,
+            username: 'Test-Guest',
+            role: 'guest'
+        });
     }
 
     tick(){
